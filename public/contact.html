@@ -63,35 +63,50 @@
 <body class="antialiased">
 
     <!-- Header -->
-    <header class="fixed top-0 left-0 w-full z-50 py-4 px-4 sm:px-8 md:px-16 transition-all duration-300 bg-black/50 backdrop-blur-sm">
-        <div class="container mx-auto flex justify-between items-center">
-             <a href="index.html" class="text-2xl font-bold text-white tracking-wider">PLUM PROTOCOL</a>
-            <nav class="hidden md:flex space-x-6 lg:space-x-8 items-center">
-                <a href="index.html" class="text-sm lg:text-base text-white hover:text-indigo-400 transition-colors">Home</a>
-                <a href="services.html" class="text-sm lg:text-base text-white hover:text-indigo-400 transition-colors">Services</a>
-                <a href="portfolio.html" class="text-sm lg:text-base text-white hover:text-indigo-400 transition-colors">Portfolio</a>
-                <a href="contact.html" class="text-sm lg:text-base text-indigo-400 font-semibold transition-colors">Contact</a>
-                <a href="contact.html" class="text-sm lg:text-base bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-500 transition-transform hover:scale-105">Initialize Project</a>
+        <header class="fixed top-0 left-0 w-full z-50 py-4 px-4 sm:px-8 md:px-16 transition-all duration-300 bg-black/50 backdrop-blur-sm">
+            <div class="container mx-auto flex justify-between items-center">
+                <!-- Logo -->
+                <a href="index.html" class="text-3xl md:text-4xl font-normal text-white font-logo">Plum Protocol</a>
+                <nav class="hidden md:flex space-x-6 lg:space-x-8 items-center">
+                    <a href="index.html" class="text-sm lg:text-base text-white hover:text-indigo-400 transition-colors">Home</a>
+                    <a href="services.html" class="text-sm lg:text-base text-indigo-400 font-semibold transition-colors">Services</a>
+                    <a href="portfolio.html" class="text-sm lg:text-base text-white hover:text-indigo-400 transition-colors">Portfolio</a>
+                    <a href="contact.html" class="text-sm lg:text-base text-white hover:text-indigo-400 transition-colors">Contact</a>
+                    <a href="contact.html" class="text-sm lg:text-base bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-500 transition-transform hover:scale-105">Initialize Project</a>
+                </nav>
+                <!-- Hamburger Button (Standard 3 Lines) -->
+                <button id="hamburger-button" class="md:hidden text-white text-3xl z-50 focus:outline-none flex-shrink-0">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <!-- Z-Index increased to 60 to cover header -->
+        <div id="mobile-menu" class="fixed inset-0 bg-black bg-opacity-95 z-[60] transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+            <!-- Header inside mobile menu -->
+            <div class="flex justify-between items-center p-4 px-4 sm:px-8">
+                <a href="index.html" class="text-3xl md:text-4xl font-normal text-white font-logo">Plum Protocol</a>
+                
+                <!-- Fixed Close Button (SVG Icon) -->
+                <button id="close-menu" class="text-white z-50 focus:outline-none p-2">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Navigation Links -->
+            <nav class="flex flex-col items-center justify-center flex-grow -mt-20 space-y-8">
+                <a href="index.html" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400">Home</a>
+                <a href="services.html" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400">Services</a>
+                <a href="portfolio.html" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400">Portfolio</a>
+                <a href="contact.html" class="mobile-menu-link text-3xl text-indigo-400 font-semibold">Contact</a>
+                <a href="contact.html" class="mt-8 bg-indigo-600 text-white px-8 py-3 rounded-full text-xl">Initialize Project</a>
             </nav>
-            <button id="hamburger-button" class="md:hidden text-white text-3xl z-50">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-            </button>
         </div>
-    </header>
-    
-    <!-- Mobile Menu (Hidden by default) -->
-    <div id="mobile-menu" class="fixed inset-0 bg-black bg-opacity-95 z-40 transform -translate-x-full transition-transform duration-300 ease-in-out">
-        <div class="flex justify-end p-4">
-            <button id="close-menu" class="text-white text-5xl">&times;</button>
-        </div>
-        <nav class="flex flex-col items-center justify-center h-full -mt-20 space-y-8">
-            <a href="index.html" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400">Home</a>
-            <a href="services.html" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400">Services</a>
-            <a href="portfolio.html" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400">Portfolio</a>
-            <a href="contact.html" class="mobile-menu-link text-3xl text-indigo-400 font-semibold">Contact</a>
-            <a href="contact.html" class="mt-8 bg-indigo-600 text-white px-8 py-3 rounded-full text-xl">Initialize Project</a>
-        </nav>
-    </div>
 
     <main class="pt-32 pb-20">
         <section id="contact-form">

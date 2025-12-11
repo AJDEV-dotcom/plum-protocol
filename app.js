@@ -32,6 +32,6 @@ app.get('/contact.html', (req, res) => {
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
-    console.log('Veyra website is live! Open your browser to take a look.');
+    console.log('Plum Protocol is live! Open your browser to take a look.');
 });
 
