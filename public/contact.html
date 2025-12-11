@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - Veyra Creatives & Digital Lab</title>
+    <title>Initialize Uplink - Plum Protocol</title>
     <link rel="icon" type="image/png" href="images/favicon.png">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             background-color: #0a0a0a;
@@ -19,17 +19,41 @@
             font-family: 'Poppins', sans-serif;
             overflow-x: hidden;
         }
+
+        /* Gradient text class */
+        .gradient-text {
+            background-image: linear-gradient(90deg, #a855f7, #3b82f6, #a855f7);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-fill-color: transparent;
+            animation: gradient-flow 4s linear infinite;
+        }
+
+        @keyframes gradient-flow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         .form-input {
-            background-color: #1e1e1e;
-            border: 1px solid #3a3a3a;
+            background-color: #111111;
+            border: 1px solid #2a2a2a;
             border-radius: 0.5rem;
             padding: 1rem;
             color: #e5e5e5;
-            transition: border-color 0.3s ease;
+            transition: all 0.3s ease;
+            font-family: monospace; /* Tech feel for inputs */
         }
         .form-input:focus {
             outline: none;
             border-color: #818cf8; /* Indigo-400 */
+            box-shadow: 0 0 15px rgba(129, 140, 248, 0.1);
+            background-color: #1a1a1a;
+        }
+        .form-input::placeholder {
+            color: #525252;
         }
         #success-message, #error-message {
             transition: opacity 0.3s ease-in-out;
@@ -41,13 +65,13 @@
     <!-- Header -->
     <header class="fixed top-0 left-0 w-full z-50 py-4 px-4 sm:px-8 md:px-16 transition-all duration-300 bg-black/50 backdrop-blur-sm">
         <div class="container mx-auto flex justify-between items-center">
-            <a href="/" class="text-2xl font-bold text-white">Véyra</a>
+             <a href="index.html" class="text-2xl font-bold text-white tracking-wider">PLUM PROTOCOL</a>
             <nav class="hidden md:flex space-x-6 lg:space-x-8 items-center">
-                <a href="/" class="text-sm lg:text-base text-white hover:text-indigo-400 transition-colors">Home</a>
+                <a href="index.html" class="text-sm lg:text-base text-white hover:text-indigo-400 transition-colors">Home</a>
                 <a href="services.html" class="text-sm lg:text-base text-white hover:text-indigo-400 transition-colors">Services</a>
                 <a href="portfolio.html" class="text-sm lg:text-base text-white hover:text-indigo-400 transition-colors">Portfolio</a>
                 <a href="contact.html" class="text-sm lg:text-base text-indigo-400 font-semibold transition-colors">Contact</a>
-                <a href="contact.html" class="text-sm lg:text-base bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-500 transition-transform hover:scale-105">Get a Quote</a>
+                <a href="contact.html" class="text-sm lg:text-base bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-500 transition-transform hover:scale-105">Initialize Project</a>
             </nav>
             <button id="hamburger-button" class="md:hidden text-white text-3xl z-50">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
@@ -61,11 +85,11 @@
             <button id="close-menu" class="text-white text-5xl">&times;</button>
         </div>
         <nav class="flex flex-col items-center justify-center h-full -mt-20 space-y-8">
-            <a href="/" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400">Home</a>
+            <a href="index.html" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400">Home</a>
             <a href="services.html" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400">Services</a>
             <a href="portfolio.html" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400">Portfolio</a>
             <a href="contact.html" class="mobile-menu-link text-3xl text-indigo-400 font-semibold">Contact</a>
-            <a href="contact.html" class="mt-8 bg-indigo-600 text-white px-8 py-3 rounded-full text-xl">Get a Quote</a>
+            <a href="contact.html" class="mt-8 bg-indigo-600 text-white px-8 py-3 rounded-full text-xl">Initialize Project</a>
         </nav>
     </div>
 
@@ -73,72 +97,72 @@
         <section id="contact-form">
             <div class="container mx-auto px-8 md:px-16">
                 <div class="text-center mb-12">
-                    <h1 class="text-5xl md:text-7xl font-bold text-white">CONTACT US</h1>
-                    <p class="text-gray-400 mt-2">Home / Contact Us</p>
+                    <h1 class="text-5xl md:text-7xl font-bold text-white">INITIALIZE UPLINK</h1>
+                    <p class="text-gray-400 mt-2 tracking-widest uppercase text-sm">System / Secure Channel</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
                     <!-- Left Side: Form -->
                     <div class="lg:col-span-2">
-                        <h2 class="text-4xl font-bold mb-2">GET IN</h2>
-                        <h2 class="text-6xl font-bold text-white mb-8">TOUCH</h2>
+                        <h2 class="text-4xl font-bold mb-2">SECURE</h2>
+                        <h2 class="text-6xl font-bold text-white mb-8">TRANSMISSION</h2>
                         
                         <form id="contact-form-element" class="space-y-6">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <input type="text" name="name" placeholder="Name*" class="form-input w-full" required>
-                                <input type="tel" name="phone" placeholder="Phone Number*" class="form-input w-full" required pattern="[0-9]{10}" title="Please enter a 10-digit phone number">
+                                <input type="text" name="name" placeholder="Operative Identity / Name*" class="form-input w-full" required>
+                                <input type="tel" name="phone" placeholder="Comms Frequency / Phone*" class="form-input w-full" required pattern="[0-9]{10}" title="Please enter a 10-digit phone number">
                             </div>
                             <div>
-                                <input type="email" name="email" placeholder="Email ID*" class="form-input w-full" required>
+                                <input type="email" name="email" placeholder="Digital Uplink / Email*" class="form-input w-full" required>
                             </div>
                             <div>
-                                <textarea name="message" placeholder="Message*" rows="6" class="form-input w-full" required></textarea>
+                                <textarea name="message" placeholder="Transmission Data / Message*" rows="6" class="form-input w-full" required></textarea>
                             </div>
                             <div>
-                                <button id="submit-button" type="submit" class="border border-indigo-400 text-indigo-400 px-8 py-3 rounded-full hover:bg-indigo-400 hover:text-white transition-colors text-lg">
-                                    Submit
+                                <button id="submit-button" type="submit" class="border border-indigo-400 text-indigo-400 px-8 py-3 rounded-full hover:bg-indigo-400 hover:text-white transition-colors text-lg uppercase tracking-wider">
+                                    Initiate Transfer
                                 </button>
                             </div>
                         </form>
-                        <div id="success-message" class="hidden mt-4 text-green-400 p-4 bg-green-900/50 rounded-lg">
-                            Success! Thank you for your message. We'll get back to you shortly.
+                        <div id="success-message" class="hidden mt-4 text-green-400 p-4 bg-green-900/20 border border-green-800 rounded-lg">
+                            <span class="font-mono">>> SUCCESS:</span> Transmission received. Awaiting protocol response.
                         </div>
-                        <div id="error-message" class="hidden mt-4 text-red-400 p-4 bg-red-900/50 rounded-lg">
-                            An error occurred. Please try again later.
+                        <div id="error-message" class="hidden mt-4 text-red-400 p-4 bg-red-900/20 border border-red-800 rounded-lg">
+                            <span class="font-mono">>> ERROR:</span> Connection interrupted. Retry transmission.
                         </div>
                     </div>
 
                     <!-- Right Side: Contact Info -->
                     <div class="pt-4">
-                        <h3 class="text-2xl font-semibold mb-6 text-white">Social Links</h3>
+                        <h3 class="text-2xl font-semibold mb-6 text-white uppercase tracking-wider">Neural Networks</h3>
                         <div class="flex flex-col space-y-4">
                             <!-- Email -->
-                            <a href="mailto:veyracreativesdigitallab25@gmail.com" class="flex items-center group">
+                            <a href="mailto:plumprotocol@gmail.com" class="flex items-center group">
                                 <div class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-800 group-hover:bg-indigo-600 transition-colors">
                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                                 </div>
-                                <span class="ml-4 text-gray-300 group-hover:text-indigo-400 transition-colors text-lg">Email</span>
+                                <span class="ml-4 text-gray-300 group-hover:text-indigo-400 transition-colors text-lg font-mono">Email</span>
                             </a>
                              <!-- LinkedIn -->
-                             <a href="https://www.linkedin.com/company/veyracreativesanddigitallab/posts/?feedView=all" target="_blank" rel="noopener noreferrer" class="flex items-center group">
+                             <a href="https://www.linkedin.com/in/anujdipak/" target="_blank" rel="noopener noreferrer" class="flex items-center group">
                                 <div class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-800 group-hover:bg-indigo-600 transition-colors">
                                     <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667h-3.554v-11.59h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.424zM2.525 6.983c-1.042 0-1.884-.842-1.884-1.882s.842-1.882 1.884-1.882 1.884.842 1.884 1.882-.842 1.882-1.884 1.882zm1.777 13.469h-3.554v-11.59h3.554v11.59z"></path></svg>
                                 </div>
-                               <span class="ml-4 text-gray-300 group-hover:text-indigo-400 transition-colors text-lg">LinkedIn</span>
+                               <span class="ml-4 text-gray-300 group-hover:text-indigo-400 transition-colors text-lg font-mono">LinkedIn</span>
                             </a>
                             <!-- WhatsApp -->
-                            <a href="https://wa.me/918928246726" target="_blank" rel="noopener noreferrer" class="flex items-center group">
+                            <a href="https://wa.me/918689927975" target="_blank" rel="noopener noreferrer" class="flex items-center group">
                                 <div class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-800 group-hover:bg-indigo-600 transition-colors">
                                     <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.06 22L7.31 20.62C8.75 21.41 10.36 21.82 12.04 21.82C17.5 21.82 21.95 17.37 21.95 11.91C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.04 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.71 20.28 11.91C20.28 16.47 16.65 20.1 12.04 20.1C10.49 20.1 9 19.64 7.74 18.86L7.44 18.68L4.83 19.3L5.51 16.75L5.32 16.45C4.54 15.19 4.07 13.58 4.07 11.91C4.07 7.35 7.7 3.67 12.04 3.67ZM9.17 7.42C8.94 7.42 8.71 7.47 8.51 7.87C8.31 8.27 7.68 8.86 7.68 10.03C7.68 11.2 8.53 12.31 8.7 12.51C8.87 12.71 10.13 14.82 12.22 15.69C13.91 16.41 14.33 16.29 14.68 16.24C15.22 16.14 16.03 15.6 16.25 15.03C16.47 14.46 16.47 14 16.37 13.8C16.28 13.6 16.11 13.53 15.86 13.41C15.61 13.28 14.35 12.65 14.13 12.56C13.91 12.46 13.74 12.41 13.57 12.71C13.4 13 12.92 13.58 12.75 13.78C12.58 13.98 12.41 14 12.16 13.88C11.91 13.75 11.01 13.43 9.94 12.47C9.13 11.73 8.59 10.84 8.44 10.59C8.29 10.34 8.41 10.2 8.56 10.05C8.69 9.92 8.86 9.7 9.03 9.53C9.2 9.36 9.25 9.24 9.35 9.04C9.45 8.84 9.4 8.67 9.33 8.5C9.25 8.33 8.79 7.42 8.59 7.42H9.17Z"></path></svg>
                                 </div>
-                                <span class="ml-4 text-gray-300 group-hover:text-indigo-400 transition-colors text-lg">WhatsApp</span>
+                                <span class="ml-4 text-gray-300 group-hover:text-indigo-400 transition-colors text-lg font-mono">WhatsApp</span>
                             </a>
-                            <!-- Instagram -->
-                            <a href="https://www.instagram.com/veyracdl_25/" target="_blank" rel="noopener noreferrer" class="flex items-center group">
+                             <!-- Instagram -->
+                             <a href="https://www.instagram.com/plumprotocol/" target="_blank" rel="noopener noreferrer" class="flex items-center group">
                                 <div class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-800 group-hover:bg-indigo-600 transition-colors">
                                     <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.024.048-1.378.06-3.808.06s-2.784-.012-3.808-.06c-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.048-1.024-.06-1.378-.06-3.808s.012-2.784.06-3.808c.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 016.343 4.522c.636-.247 1.363-.416 2.427-.465C9.793 2.013 10.147 2 12.315 2zM11.999 5a7 7 0 100 14 7 7 0 000-14zm0 2a5 5 0 110 10 5 5 0 010-10z" clip-rule="evenodd"></path></svg>
                                 </div>
-                                <span class="ml-4 text-gray-300 group-hover:text-indigo-400 transition-colors text-lg">Instagram</span>
+                                <span class="ml-4 text-gray-300 group-hover:text-indigo-400 transition-colors text-lg font-mono">Instagram</span>
                             </a>
                         </div>
                     </div>
@@ -153,38 +177,37 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left border-t border-gray-800 pt-10">
                 <!-- Brand -->
                 <div class="md:col-span-1">
-                     <a href="/" class="text-3xl font-bold text-white mb-2 inline-block">Véyra</a>
-                     <p class="text-gray-500 text-sm">Creativity Meets Innovation</p>
+                     <a href="/" class="text-3xl font-bold text-white mb-2 inline-block">Plum Protocol</a>
+                     <p class="text-gray-500 text-sm">Architecting the Unimagined</p>
                 </div>
                 <!-- Contact Info -->
                 <div>
-                    <h4 class="font-semibold text-white mb-4">Contact Us</h4>
+                    <h4 class="font-semibold text-white mb-4">Uplink</h4>
                     <div class="text-gray-400 space-y-2">
-                        <p><a href="tel:+918928246726" class="hover:text-indigo-400 transition-colors">+91 8928246726</a></p>
                         <p><a href="tel:+918689927975" class="hover:text-indigo-400 transition-colors">+91 8689927975</a></p>
-                        <p><a href="mailto:veyracreativesdigitallab25@gmail.com" class="hover:text-indigo-400 transition-colors">Email</a></p>
-                        <p><a href="https://wa.me/918928246726" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">WhatsApp</a></p>
+                        <p><a href="mailto:plumprotocol@gmail.com" class="hover:text-indigo-400 transition-colors">plumprotocol@gmail.com</a></p>
+                        <p><a href="https://wa.me/918689927975" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">WhatsApp Secure</a></p>
                     </div>
                 </div>
                  <!-- Social Links -->
                  <div class="md:ml-8">
-                    <h4 class="font-semibold text-white mb-4">Follow Us</h4>
+                    <h4 class="font-semibold text-white mb-4">Network</h4>
                     <div class="text-gray-400 space-y-2">
-                        <p><a href="https://www.linkedin.com/company/veyracreativesanddigitallab/posts/?feedView=all" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">LinkedIn</a></p>
-                        <p><a href="https://www.instagram.com/veyracdl_25/" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">Instagram</a></p>
+                        <p><a href="https://www.linkedin.com/in/anujdipak/" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">LinkedIn</a></p>
+                        <p><a href="https://www.instagram.com/plumprotocol/" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">Instagram</a></p>
                     </div>
                 </div>
                 <!-- Legal Links -->
                 <div>
-                    <h4 class="font-semibold text-white mb-4">Legal</h4>
+                    <h4 class="font-semibold text-white mb-4">Legal Parameters</h4>
                     <div class="text-gray-400 space-y-2">
-                        <p><a href="#" class="hover:text-indigo-400 transition-colors">Terms & Conditions</a></p>
+                        <p><a href="#" class="hover:text-indigo-400 transition-colors">Terms of Service</a></p>
                         <p><a href="#" class="hover:text-indigo-400 transition-colors">Privacy Policy</a></p>
                     </div>
                 </div>
             </div>
             <div class="text-center text-gray-500 mt-12 pt-8 border-t border-gray-800">
-                 <p class="text-sm">&copy; 2024 Veyra Creatives & Digital Lab. All Rights Reserved.</p>
+                 <p class="text-sm">&copy; 2025 Plum Protocol. All Systems Operational.</p>
             </div>
         </div>
     </footer>
@@ -236,42 +259,44 @@
             const submitButton = document.getElementById('submit-button');
             const successMessage = document.getElementById('success-message');
             const errorMessage = document.getElementById('error-message');
-            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyEZTw34rodxRbVR2xOvmzkUrEUix9uVlWwJNZ9FsaCGoEa_useyIbCsfAweh7OIxsy/exec";
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx5l0zIaFMGfuZeufAtig7CP89jp1M2GAZbiNLGWe7fMLMyUA77p5ObJRRpfAj1kzyk/exec";
 
             form.addEventListener('submit', e => {
                 e.preventDefault();
                 submitButton.disabled = true;
-                submitButton.textContent = 'Submitting...';
+                submitButton.textContent = 'Transmitting...';
                 successMessage.classList.add('hidden');
                 errorMessage.classList.add('hidden');
 
-                fetch(SCRIPT_URL, { method: 'POST', body: new FormData(form)})
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.result === 'success') {
-                            console.log('Success!', data);
-                            successMessage.classList.remove('hidden');
-                            form.reset();
-                        } else {
-                            throw new Error(data.error || 'Unknown error from Google Script');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error!', error.message);
-                        errorMessage.classList.remove('hidden');
-                    })
-                    .finally(() => {
-                        submitButton.disabled = false;
-                        submitButton.textContent = 'Submit';
-                         setTimeout(() => {
-                           successMessage.classList.add('hidden');
-                           errorMessage.classList.add('hidden');
-                        }, 5000);
-                    });
+                fetch(SCRIPT_URL, { 
+                    method: 'POST', 
+                    body: new FormData(form),
+                    mode: 'no-cors' // Use 'no-cors' to handle Google's redirect
+                })
+                .then(response => {
+                    // 'no-cors' mode results in an opaque response, so we can't check response.json()
+                    // We will assume success because the request was sent.
+                    console.log('Success (assumed due to no-cors mode)');
+                    successMessage.classList.remove('hidden');
+                    form.reset();
+                })
+                .catch(error => {
+                     // This catch block might not even run for 'no-cors' errors, 
+                     // but it's good practice.
+                    console.error('Error!', error.message);
+                    errorMessage.classList.remove('hidden');
+                })
+                .finally(() => {
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Initiate Transfer';
+                     setTimeout(() => {
+                       successMessage.classList.add('hidden');
+                       errorMessage.classList.add('hidden');
+                    }, 5000);
+                });
             });
         });
     </script>
 
 </body>
 </html>
-

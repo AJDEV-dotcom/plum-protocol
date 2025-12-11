@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Services - Veyra Creatives & Digital Lab</title>
+    <title>Protocol Modules - Plum Protocol</title>
     <link rel="icon" type="image/png" href="images/favicon.png">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Added Dancing Script for the Logo -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             background-color: #0a0a0a;
@@ -19,6 +20,12 @@
             font-family: 'Poppins', sans-serif;
             overflow-x: hidden;
         }
+
+        /* Custom Font Class for Logos */
+        .font-logo {
+            font-family: 'Dancing Script', cursive;
+        }
+
         /* Preloader Styles */
         #preloader {
             position: fixed;
@@ -32,14 +39,17 @@
             align-items: center;
             justify-content: center;
             transition: opacity 0.5s ease-in-out;
+            will-change: opacity;
         }
         #preloader.loaded {
             opacity: 0;
             pointer-events: none;
         }
         .loader-logo {
-            font-size: 3rem;
-            font-weight: bold;
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem; 
+            font-weight: 400;
+            letter-spacing: 0; 
             color: #e5e5e5;
             animation: pulse 1.5s infinite ease-in-out;
         }
@@ -66,23 +76,51 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            transition: border-color 0.3s ease, transform 0.3s ease;
+            /* Performance Optimization */
+            contain: layout paint; 
+            will-change: transform, border-color;
+        }
+        .service-card:hover {
+            border-color: #4f46e5;
+            transform: translateY(-2px);
         }
         @media (min-width: 768px) {
             .service-card {
                 flex-direction: row;
             }
         }
-        .service-card-image {
-            background-size: cover;
-            background-position: center;
-            min-height: 250px;
+        
+        /* Image Wrapper to hold the img tag */
+        .service-card-image-wrapper {
             width: 100%;
+            min-height: 250px;
+            position: relative;
+            overflow: hidden;
+            background-color: #1f2937;
         }
-         @media (min-width: 768px) {
-            .service-card-image {
+        @media (min-width: 768px) {
+            .service-card-image-wrapper {
                 width: 40%;
+                min-height: auto;
             }
         }
+
+        /* Optimized Image Class */
+        .service-card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: filter 0.5s ease, transform 0.7s ease;
+            will-change: filter, transform;
+            backface-visibility: hidden;
+        }
+        .service-card:hover .service-card-img {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
         .bullet-item::before {
             content: '➤';
             color: #818cf8; /* Indigo-400 */
@@ -95,106 +133,129 @@
 
     <!-- Preloader -->
     <div id="preloader">
-        <div class="loader-logo">Véyra</div>
+        <div class="loader-logo">Plum Protocol</div>
     </div>
 
     <div id="main-content" class="content-hidden transition-opacity duration-500">
         <!-- Header -->
         <header class="fixed top-0 left-0 w-full z-50 py-4 px-4 sm:px-8 md:px-16 transition-all duration-300 bg-black/50 backdrop-blur-sm">
             <div class="container mx-auto flex justify-between items-center">
-                <a href="/" class="text-2xl font-bold text-white">Véyra</a>
+                <!-- Logo -->
+                <a href="index.html" class="text-3xl md:text-4xl font-normal text-white font-logo">Plum Protocol</a>
                 <nav class="hidden md:flex space-x-6 lg:space-x-8 items-center">
-                    <a href="/" class="text-sm lg:text-base text-white hover:text-indigo-400 transition-colors">Home</a>
+                    <a href="index.html" class="text-sm lg:text-base text-white hover:text-indigo-400 transition-colors">Home</a>
                     <a href="services.html" class="text-sm lg:text-base text-indigo-400 font-semibold transition-colors">Services</a>
                     <a href="portfolio.html" class="text-sm lg:text-base text-white hover:text-indigo-400 transition-colors">Portfolio</a>
                     <a href="contact.html" class="text-sm lg:text-base text-white hover:text-indigo-400 transition-colors">Contact</a>
-                    <a href="contact.html" class="text-sm lg:text-base bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-500 transition-transform hover:scale-105">Get a Quote</a>
+                    <a href="contact.html" class="text-sm lg:text-base bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-500 transition-transform hover:scale-105">Initialize Project</a>
                 </nav>
-                <button id="hamburger-button" class="md:hidden text-white text-3xl z-50">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                <!-- Hamburger Button (Standard 3 Lines) -->
+                <button id="hamburger-button" class="md:hidden text-white text-3xl z-50 focus:outline-none flex-shrink-0">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
                 </button>
             </div>
         </header>
 
         <!-- Mobile Menu (Hidden by default) -->
-        <div id="mobile-menu" class="fixed inset-0 bg-black bg-opacity-95 z-40 transform -translate-x-full transition-transform duration-300 ease-in-out">
-            <div class="flex justify-end p-4">
-                <button id="close-menu" class="text-white text-5xl">&times;</button>
+        <!-- Z-Index increased to 60 to cover header -->
+        <div id="mobile-menu" class="fixed inset-0 bg-black bg-opacity-95 z-[60] transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+            <!-- Header inside mobile menu -->
+            <div class="flex justify-between items-center p-4 px-4 sm:px-8">
+                <a href="index.html" class="text-3xl md:text-4xl font-normal text-white font-logo">Plum Protocol</a>
+                
+                <!-- Fixed Close Button (SVG Icon) -->
+                <button id="close-menu" class="text-white z-50 focus:outline-none p-2">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
             </div>
-            <nav class="flex flex-col items-center justify-center h-full -mt-20 space-y-8">
-                <a href="/" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400">Home</a>
+            
+            <!-- Navigation Links -->
+            <nav class="flex flex-col items-center justify-center flex-grow -mt-20 space-y-8">
+                <a href="index.html" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400">Home</a>
                 <a href="services.html" class="mobile-menu-link text-3xl text-indigo-400 font-semibold">Services</a>
                 <a href="portfolio.html" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400">Portfolio</a>
                 <a href="contact.html" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400">Contact</a>
-                <a href="contact.html" class="mt-8 bg-indigo-600 text-white px-8 py-3 rounded-full text-xl">Get a Quote</a>
+                <a href="contact.html" class="mt-8 bg-indigo-600 text-white px-8 py-3 rounded-full text-xl">Initialize Project</a>
             </nav>
         </div>
 
         <main class="pt-32 pb-20">
             <div class="container mx-auto px-4 sm:px-8 md:px-16">
                 <div class="text-center mb-16">
-                    <h1 class="text-4xl md:text-6xl font-bold">Our Services</h1>
-                    <p class="text-gray-400 mt-2">Home / Services</p>
+                    <h1 class="text-4xl md:text-6xl font-bold">Protocol Modules</h1>
+                    <p class="text-gray-400 mt-2 tracking-widest uppercase text-sm">System Capabilities / Overview</p>
                 </div>
 
                 <div class="space-y-12">
-                    <!-- Service Card 1: Design & Content -->
+                    <!-- Service Card 1 -->
                     <div class="service-card">
-                        <div class="service-card-image" style="background-image: url('images/design.webp')"></div>
+                        <div class="service-card-image-wrapper">
+                            <img src="images/design.webp" alt="Visual Synthesis" loading="lazy" decoding="async" class="service-card-img">
+                        </div>
                         <div class="p-8 md:p-12 w-full md:w-3/5 flex flex-col justify-center">
-                            <h2 class="text-3xl md:text-4xl font-bold mb-6">Design & Content</h2>
+                            <h2 class="text-3xl md:text-4xl font-bold mb-6">Visual Synthesis</h2>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 mb-6 text-gray-300">
-                                <p class="bullet-item">Graphics & Branding</p>
-                                <p class="bullet-item">UI/UX Design</p>
-                                <p class="bullet-item">Video Production</p>
-                                <p class="bullet-item">Photography</p>
+                                <p class="bullet-item">Identity Architecture</p>
+                                <p class="bullet-item">Immersive UI/UX</p>
+                                <p class="bullet-item">Cinematic Production</p>
+                                <p class="bullet-item">Visual Linguistics</p>
                             </div>
-                            <p class="text-gray-400">We translate your brand’s essence into compelling visual narratives. Our creative process involves a deep dive into your identity to produce stunning graphics, intuitive user interfaces, and high-impact video content. From initial concept to final execution, we craft every pixel and frame to not only capture attention but to tell a story that resonates with your audience.</p>
+                            <p class="text-gray-400">We don't just design; we hallucinate reality. Our visual language bridges the gap between static art and kinetic experience. From brand identity to motion graphics, we craft interfaces that feel alive and carry a weight that resonates in the digital void.</p>
                         </div>
                     </div>
 
-                    <!-- Service Card 2: Digital Marketing & Branding -->
+                    <!-- Service Card 2 -->
                     <div class="service-card">
-                        <div class="service-card-image" style="background-image: url('images/marketing.webp')"></div>
+                        <div class="service-card-image-wrapper">
+                            <img src="images/marketing.webp" alt="Brand Velocity" loading="lazy" decoding="async" class="service-card-img">
+                        </div>
                         <div class="p-8 md:p-12 w-full md:w-3/5 flex flex-col justify-center">
-                            <h2 class="text-3xl md:text-4xl font-bold mb-6">Digital Marketing & Branding</h2>
+                            <h2 class="text-3xl md:text-4xl font-bold mb-6">Brand Velocity</h2>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 mb-6 text-gray-300">
-                                <p class="bullet-item">Brand Strategy</p>
-                                <p class="bullet-item">Social Media Management</p>
-                                <p class="bullet-item">Paid Advertising (PPC)</p>
-                                <p class="bullet-item">Search Engine Optimization</p>
+                                <p class="bullet-item">Data Weaponization</p>
+                                <p class="bullet-item">Signal Amplification</p>
+                                <p class="bullet-item">Targeted Deployment</p>
+                                <p class="bullet-item">Search Dominance</p>
                             </div>
-                            <p class="text-gray-400">We build and amplify your brand's voice in a crowded digital world. Our approach is rooted in data-driven strategy, leveraging market research and analytics to create targeted campaigns that deliver measurable ROI. We connect you with your ideal audience through engaging content, strategic ad placement, and organic growth hacking to build a powerful and lasting brand presence.</p>
+                            <p class="text-gray-400">Silence is the enemy. We deploy high-frequency narratives and data-weaponized strategies to cut through the noise. By leveraging deep analytics and consumer psychographics, we ensure your signal is the only one heard in a crowded spectrum.</p>
                         </div>
                     </div>
 
-                    <!-- Service Card 3: Web & Tech Solutions -->
+                    <!-- Service Card 3 -->
                     <div class="service-card">
-                         <div class="service-card-image" style="background-image: url('images/web.webp')"></div>
+                         <div class="service-card-image-wrapper">
+                            <img src="images/web.webp" alt="Digital Ecosystems" loading="lazy" decoding="async" class="service-card-img">
+                        </div>
                         <div class="p-8 md:p-12 w-full md:w-3/5 flex flex-col justify-center">
-                            <h2 class="text-3xl md:text-4xl font-bold mb-6">Web & Tech Solutions</h2>
+                            <h2 class="text-3xl md:text-4xl font-bold mb-6">Digital Ecosystems</h2>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 mb-6 text-gray-300">
-                                <p class="bullet-item">Website Development</p>
-                                <p class="bullet-item">E-commerce Platforms</p>
-                                <p class="bullet-item">Mobile App Development</p>
-                                <p class="bullet-item">Emerging Technologies</p>
+                                <p class="bullet-item">Full-Stack Engineering</p>
+                                <p class="bullet-item">Commerce Architectures</p>
+                                <p class="bullet-item">App Deployment</p>
+                                <p class="bullet-item">Blockchain Integration</p>
                             </div>
-                            <p class="text-gray-400">We engineer robust, scalable, and intuitive digital platforms using cutting-edge technologies. Our focus is on creating seamless user experiences that are both beautiful and functional. From lightning-fast websites and powerful e-commerce stores to innovative mobile applications, our technical solutions are built to perform, designed to impress, and optimized for growth.</p>
+                            <p class="text-gray-400">Code is our clay. We sculpt resilient, scalable, and high-performance digital infrastructures. From headless architectures and decentralized apps to complex e-commerce platforms, we build the backbone that powers your future operations.</p>
                         </div>
                     </div>
 
-                    <!-- Service Card 4: Software & AI -->
+                    <!-- Service Card 4 -->
                     <div class="service-card">
-                         <div class="service-card-image" style="background-image: url('images/ai.webp')"></div>
+                         <div class="service-card-image-wrapper">
+                            <img src="images/ai.webp" alt="Neural Intelligence" loading="lazy" decoding="async" class="service-card-img">
+                        </div>
                         <div class="p-8 md:p-12 w-full md:w-3/5 flex flex-col justify-center">
-                            <h2 class="text-3xl md:text-4xl font-bold mb-6">Software & AI</h2>
+                            <h2 class="text-3xl md:text-4xl font-bold mb-6">Neural Intelligence</h2>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 mb-6 text-gray-300">
-                                <p class="bullet-item">Artificial Intelligence</p>
-                                <p class="bullet-item">MLM & Custom Software</p>
-                                <p class="bullet-item">CRM Integration</p>
-                                <p class="bullet-item">Process Automation</p>
+                                <p class="bullet-item">AI Integration</p>
+                                <p class="bullet-item">Algorithmic Automation</p>
+                                <p class="bullet-item">Predictive CRM</p>
+                                <p class="bullet-item">Smart Systems</p>
                             </div>
-                            <p class="text-gray-400">We develop intelligent software that solves complex business problems and drives efficiency. By integrating artificial intelligence and machine learning, we help you automate processes, unlock powerful data-driven insights, and create smart applications for the future. Whether it's a custom CRM or an advanced automation tool, we build software that fuels innovation.</p>
+                            <p class="text-gray-400">The future is algorithmic. We integrate next-gen AI and machine learning models to automate the mundane and illuminate the complex. We turn raw data into prophetic insights, building intelligent applications that learn and adapt.</p>
                         </div>
                     </div>
                 </div>
@@ -207,38 +268,37 @@
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left border-t border-gray-800 pt-10">
                     <!-- Brand -->
                     <div class="md:col-span-1">
-                         <a href="/" class="text-3xl font-bold text-white mb-2 inline-block">Véyra</a>
-                         <p class="text-gray-500 text-sm">Creativity Meets Innovation</p>
+                         <a href="index.html" class="text-3xl font-normal text-white mb-2 inline-block font-logo">Plum Protocol</a>
+                         <p class="text-gray-500 text-sm">Architecting the Unimagined</p>
                     </div>
                     <!-- Contact Info -->
                     <div>
-                        <h4 class="font-semibold text-white mb-4">Contact Us</h4>
+                        <h4 class="font-semibold text-white mb-4">Uplink</h4>
                         <div class="text-gray-400 space-y-2">
-                            <p><a href="tel:+918928246726" class="hover:text-indigo-400 transition-colors">+91 8928246726</a></p>
                             <p><a href="tel:+918689927975" class="hover:text-indigo-400 transition-colors">+91 8689927975</a></p>
-                            <p><a href="mailto:veyracreativesdigitallab25@gmail.com" class="hover:text-indigo-400 transition-colors">Email</a></p>
-                            <p><a href="https://wa.me/918928246726" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">WhatsApp</a></p>
+                            <p><a href="mailto:plumprotocol@gmail.com" class="hover:text-indigo-400 transition-colors">plumprotocol@gmail.com</a></p>
+                            <p><a href="https://wa.me/918689927975" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">WhatsApp Secure</a></p>
                         </div>
                     </div>
                      <!-- Social Links -->
                      <div class="md:ml-8">
-                        <h4 class="font-semibold text-white mb-4">Follow Us</h4>
+                        <h4 class="font-semibold text-white mb-4">Network</h4>
                         <div class="text-gray-400 space-y-2">
-                            <p><a href="https://www.linkedin.com/company/veyracreativesanddigitallab/posts/?feedView=all" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">LinkedIn</a></p>
-                            <p><a href="https://www.instagram.com/veyracdl_25/" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">Instagram</a></p>
+                            <p><a href="https://www.linkedin.com/in/anujdipak/" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">LinkedIn</a></p>
+                            <p><a href="https://www.instagram.com/plumprotocol/" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">Instagram</a></p>
                         </div>
                     </div>
                     <!-- Legal Links -->
                     <div>
-                        <h4 class="font-semibold text-white mb-4">Legal</h4>
+                        <h4 class="font-semibold text-white mb-4">Legal Parameters</h4>
                         <div class="text-gray-400 space-y-2">
-                            <p><a href="#" class="hover:text-indigo-400 transition-colors">Terms & Conditions</a></p>
+                            <p><a href="#" class="hover:text-indigo-400 transition-colors">Terms of Service</a></p>
                             <p><a href="#" class="hover:text-indigo-400 transition-colors">Privacy Policy</a></p>
                         </div>
                     </div>
                 </div>
                 <div class="text-center text-gray-500 mt-12 pt-8 border-t border-gray-800">
-                     <p class="text-sm">&copy; 2024 Veyra Creatives & Digital Lab. All Rights Reserved.</p>
+                     <p class="text-sm">&copy; 2025 Plum Protocol. All Systems Operational.</p>
                 </div>
             </div>
         </footer>
@@ -254,7 +314,7 @@
             const preloader = document.getElementById('preloader');
             const mainContent = document.getElementById('main-content');
             
-            // Set initial states for animation
+            // Set initial states for animation using will-change property for optimization
             gsap.set('.service-card', { opacity: 0, y: 50 });
 
             // Listen for the window to be fully loaded (including images)
@@ -277,7 +337,11 @@
             });
 
             // --- LENIS SMOOTH SCROLL ---
-            const lenis = new Lenis({ duration: 1.2 });
+            const lenis = new Lenis({ 
+                duration: 1.2,
+                smoothWheel: true,
+                wheelMultiplier: 1,
+            });
             function raf(time) {
                 lenis.raf(time);
                 requestAnimationFrame(raf);
@@ -292,11 +356,13 @@
 
             hamburgerBtn.addEventListener('click', () => {
                 mobileMenu.classList.remove('-translate-x-full');
+                hamburgerBtn.classList.add('hidden'); // Hide the hamburger
                 document.body.style.overflow = 'hidden';
             });
 
             const closeMenu = () => {
                 mobileMenu.classList.add('-translate-x-full');
+                hamburgerBtn.classList.remove('hidden'); // Show the hamburger
                 document.body.style.overflow = '';
             };
 
@@ -310,4 +376,3 @@
     </script>
 </body>
 </html>
-

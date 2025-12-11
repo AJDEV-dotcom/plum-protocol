@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Veyra Creatives & Digital Lab - A New Experience</title>
+    <title>Plum Protocol | The Digital Vanguard</title>
     <link rel="icon" type="image/png" href="images/favicon.png">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Added Dancing Script -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* Base styles with a vibrant gradient background */
         body {
@@ -19,6 +20,51 @@
             color: #e5e5e5;
             font-family: 'Poppins', sans-serif;
             overflow-x: hidden;
+        }
+
+        /* Custom Font Class for Logos */
+        .font-logo {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* Preloader Styles */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0a0a0a;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease-in-out;
+            will-change: opacity;
+        }
+        #preloader.loaded {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .loader-logo {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem; /* Smaller on mobile by default */
+            font-weight: 400;
+            letter-spacing: 0;
+            color: #e5e5e5;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+        @media (min-width: 768px) {
+            .loader-logo { font-size: 4rem; }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.95); }
+        }
+        /* Hide main content initially to prevent FOUC */
+        .content-hidden {
+            opacity: 0;
+            visibility: hidden;
         }
 
         /* Hero Video & Overlay */
@@ -41,6 +87,8 @@
             transform: translate(-50%, -50%);
             z-index: -2;
             filter: brightness(0.3);
+            will-change: transform; 
+            backface-visibility: hidden;
         }
 
         /* Animated Background Orb */
@@ -56,18 +104,27 @@
             animation: moveOrb 20s infinite alternate ease-in-out;
             top: 15%;
             left: 15%;
+            will-change: transform;
+            backface-visibility: hidden;
         }
 
         @keyframes moveOrb {
-            0% { transform: translate(0, 0); }
-            50% { transform: translate(100px, -150px) scale(1.1); }
-            100% { transform: translate(-100px, 100px); }
+            0% { transform: translate3d(0, 0, 0); }
+            50% { transform: translate3d(100px, -150px, 0) scale(1.1); }
+            100% { transform: translate3d(-100px, 100px, 0); }
         }
 
         /* Text Animation Wrapper */
         .line-wrapper {
             overflow: hidden;
             height: fit-content;
+            padding-bottom: 0.2em;
+            margin-bottom: -0.2em;
+        }
+        
+        .hero-line {
+            will-change: transform, opacity;
+            backface-visibility: hidden;
         }
         
         /* Scrolling Marquee */
@@ -82,17 +139,22 @@
         .marquee-content {
             display: inline-block;
             animation: marquee 30s linear infinite;
+            will-change: transform;
+            backface-visibility: hidden;
         }
         .marquee-item {
             display: inline-block;
-            padding: 1rem 2rem;
-            font-size: 1.25rem; /* Adjusted for responsiveness */
+            padding: 0.75rem 1.5rem; /* Reduced padding for mobile */
+            font-size: 1rem; /* Smaller font for mobile */
             font-weight: 600;
             color: #a0a0a0;
         }
+        @media (min-width: 768px) {
+            .marquee-item { padding: 1rem 2rem; font-size: 1.25rem; }
+        }
         @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); }
         }
 
         /* Service Accordion Styles */
@@ -100,55 +162,63 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
             overflow: hidden;
+            contain: layout paint; 
         }
         .service-header {
             cursor: pointer;
-            padding: 1.5rem 0; /* Adjusted for responsiveness */
+            padding: 1.25rem 0; /* Reduced padding */
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: relative;
             z-index: 2;
         }
+        @media (min-width: 768px) {
+            .service-header { padding: 1.5rem 0; }
+        }
         .service-title-group {
             display: flex;
             align-items: center;
-            gap: 1rem; /* Adjusted for responsiveness */
+            gap: 0.75rem;
         }
         .service-title-group .service-num {
             color: #6b7280;
-            font-size: 0.875rem; /* Adjusted for responsiveness */
+            font-size: 0.75rem; /* Smaller number */
             font-weight: 500;
         }
         .service-title-group .service-name {
-            font-size: 1.5rem; /* Adjusted for mobile */
+            font-size: 1.25rem; /* Smaller title on mobile (20px) */
             font-weight: 600;
             color: #9ca3af;
             transition: color 0.3s ease;
         }
-        @media (min-width: 768px) { /* Tablet and up */
-             .service-title-group .service-name {
-                font-size: 2.5rem;
-            }
+        @media (min-width: 768px) { 
+             .service-title-group .service-name { font-size: 2.5rem; }
+             .service-title-group .service-num { font-size: 0.875rem; }
         }
         .service-icon {
             color: #9ca3af;
             transition: color 0.3s ease;
+            transform: scale(0.8); /* Smaller icon on mobile */
         }
+        @media (min-width: 768px) { .service-icon { transform: scale(1); } }
+
         .service-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             z-index: 2;
+            will-change: max-height;
         }
         .service-content-inner {
-            padding-bottom: 2rem;
-            padding-left: 0; /* Adjusted for mobile */
+            padding-bottom: 1.5rem;
+            padding-left: 0;
         }
         @media (min-width: 768px) {
             .service-content-inner {
-                padding-left: 2.75rem; /* Corresponds to number + gap */
+                padding-bottom: 2rem;
+                padding-left: 2.75rem; 
             }
         }
         /* Active/Hover State */
@@ -157,7 +227,7 @@
             color: #818cf8; /* Indigo-400 */
         }
         .service-item.active .service-content {
-            max-height: 500px; /* Expand to reveal content */
+            max-height: 500px;
         }
         .service-item.active .service-name,
         .service-item.active .service-icon {
@@ -167,201 +237,225 @@
 </head>
 <body class="antialiased">
 
-    <!-- Header -->
-    <header class="fixed top-0 left-0 w-full z-50 py-4 px-4 sm:px-8 md:px-16 transition-all duration-300">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="/" class="text-2xl font-bold text-white">Véyra</a>
-            <nav class="hidden md:flex space-x-6 lg:space-x-8 items-center">
-                <a href="/" class="text-sm lg:text-base text-indigo-400 font-semibold transition-colors">Home</a>
-                <a href="services.html" class="text-sm lg:text-base text-white hover:text-indigo-400 transition-colors">Services</a>
-                <a href="portfolio.html" class="text-sm lg:text-base text-white hover:text-indigo-400 transition-colors">Portfolio</a>
-                <a href="contact.html" class="text-sm lg:text-base text-white hover:text-indigo-400 transition-colors">Contact</a>
-                <a href="contact.html" class="text-sm lg:text-base bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-500 transition-transform hover:scale-105">Get a Quote</a>
-            </nav>
-            <button id="hamburger-button" class="md:hidden text-white text-3xl z-50">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-            </button>
-        </div>
-    </header>
-    
-    <!-- Mobile Menu (Hidden by default) -->
-    <div id="mobile-menu" class="fixed inset-0 bg-black bg-opacity-95 z-40 transform -translate-x-full transition-transform duration-300 ease-in-out">
-        <div class="flex justify-end p-4">
-            <button id="close-menu" class="text-white text-5xl">&times;</button>
-        </div>
-        <nav class="flex flex-col items-center justify-center h-full -mt-20 space-y-8">
-            <a href="/" class="mobile-menu-link text-3xl text-indigo-400 font-semibold">Home</a>
-            <a href="services.html" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400">Services</a>
-            <a href="portfolio.html" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400">Portfolio</a>
-            <a href="contact.html" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400">Contact</a>
-            <a href="contact.html" class="mt-8 bg-indigo-600 text-white px-8 py-3 rounded-full text-xl">Get a Quote</a>
-        </nav>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader-logo">Plum Protocol</div>
     </div>
 
-
-    <main>
-        <!-- Hero Section with Video Show Reel -->
-        <section id="hero" class="px-4">
-            <div class="background-orb"></div>
-            <video id="hero-video" autoplay loop muted playsinline poster="https://placehold.co/1920x1080/0a0a0a/0a0a0a">
-                <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-video-of-a-man-with-head-down-42343-large.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <div class="text-center z-10">
-                <h2 class="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-tight">
-                    <div class="line-wrapper"><div class="hero-line">Creativity Meets</div></div>
-                    <div class="line-wrapper"><div class="hero-line text-indigo-400">Innovation.</div></div>
-                </h2>
-                <div class="line-wrapper">
-                    <p class="hero-line text-lg md:text-xl text-gray-300 mt-6 max-w-2xl mx-auto">
-                        We are a full-service creative and digital lab, crafting unique brand experiences that drive growth.
-                    </p>
-                </div>
-                <div class="line-wrapper">
-                   <a href="contact.html" class="hero-line inline-block mt-8 border border-indigo-400 text-indigo-400 px-8 py-3 rounded-full hover:bg-indigo-400 hover:text-white transition-colors text-lg">
-                        Contact Us
-                    </a>
-                </div>
+    <div id="main-content" class="content-hidden transition-opacity duration-500">
+        <!-- Header -->
+        <header class="fixed top-0 left-0 w-full z-50 py-4 px-4 sm:px-8 md:px-16 transition-all duration-300 bg-black/50 backdrop-blur-sm">
+            <div class="container mx-auto flex justify-between items-center">
+                <!-- Logo: Smaller text on mobile -->
+                <a href="index.html" class="text-3xl md:text-4xl font-normal text-white font-logo">Plum Protocol</a>
+                
+                <nav class="hidden md:flex space-x-6 lg:space-x-8 items-center">
+                    <a href="index.html" class="text-sm lg:text-base text-indigo-400 font-semibold transition-colors">Home</a>
+                    <a href="services.html" class="text-sm lg:text-base text-white hover:text-indigo-400 transition-colors">Services</a>
+                    <a href="portfolio.html" class="text-sm lg:text-base text-white hover:text-indigo-400 transition-colors">Portfolio</a>
+                    <a href="contact.html" class="text-sm lg:text-base text-white hover:text-indigo-400 transition-colors">Contact</a>
+                    <a href="contact.html" class="text-sm lg:text-base bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-500 transition-transform hover:scale-105">Initialize Project</a>
+                </nav>
+                
+                <!-- Hamburger Button: Matches Services Page (flex-shrink-0) -->
+                <button id="hamburger-button" class="md:hidden text-white text-3xl z-50 focus:outline-none flex-shrink-0">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
             </div>
-        </section>
-
-        <!-- Marquee Section -->
-        <section class="marquee">
-            <div class="marquee-content">
-                 <span class="marquee-item">Design & Content</span>
-                <span class="marquee-item">Digital Marketing & Branding</span>
-                <span class="marquee-item">Web & Tech Solutions</span>
-                <span class="marquee-item">Software & AI</span>
-                <span class="marquee-item">UI/UX Design</span>
-                <!-- Duplicate for seamless loop -->
-                 <span class="marquee-item">Design & Content</span>
-                <span class="marquee-item">Digital Marketing & Branding</span>
-                <span class="marquee-item">Web & Tech Solutions</span>
-                <span class="marquee-item">Software & AI</span>
-                <span class="marquee-item">UI/UX Design</span>
+        </header>
+        
+        <!-- Mobile Menu (Hidden by default) -->
+        <!-- Z-Index 60 to sit above header -->
+        <div id="mobile-menu" class="fixed inset-0 bg-black bg-opacity-95 z-[60] transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+            <!-- Header inside mobile menu -->
+            <div class="flex justify-between items-center p-4 px-4 sm:px-8">
+                <a href="index.html" class="text-3xl md:text-4xl font-normal text-white font-logo">Plum Protocol</a>
+                <!-- Close Button SVG -->
+                <button id="close-menu" class="text-white text-5xl focus:outline-none">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
             </div>
-        </section>
+            <!-- Navigation Links -->
+            <nav class="flex flex-col items-center justify-center flex-grow -mt-20 space-y-8">
+                <a href="index.html" class="mobile-menu-link text-3xl text-indigo-400 font-semibold">Home</a>
+                <a href="services.html" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400">Services</a>
+                <a href="portfolio.html" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400">Portfolio</a>
+                <a href="contact.html" class="mobile-menu-link text-3xl text-gray-300 hover:text-indigo-400">Contact</a>
+                <a href="contact.html" class="mt-8 bg-indigo-600 text-white px-8 py-3 rounded-full text-xl">Initialize Project</a>
+            </nav>
+        </div>
 
-        <!-- Services Accordion Section -->
-        <section id="services" class="py-20 md:py-32">
-            <div class="container mx-auto px-4 sm:px-8 md:px-16">
-                <div class="mb-12 md:mb-16">
-                    <h2 class="text-4xl md:text-5xl font-bold">Our Services</h2>
-                </div>
-                <div id="services-list">
-                    <!-- Service Item 1 -->
-                    <div class="service-item">
-                        <div class="service-header">
-                            <div class="service-title-group">
-                                <span class="service-num">01</span>
-                                <h3 class="service-name">Design & Content</h3>
-                            </div>
-                            <div class="service-icon">
-                                <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L14.732 3.732z"></path></svg>
-                            </div>
-                        </div>
-                        <div class="service-content">
-                            <div class="service-content-inner max-w-3xl">
-                                <p class="text-gray-400 text-base md:text-lg mb-6">We believe great design is about telling a compelling story. Our team creates stunning visuals, from brand identity and UI/UX design to captivating video content. We approach every project with clarity, shoot with care, and edit with feeling to produce content that not only looks good but also carries weight and leaves a lasting mark.</p>
-                                <a href="services.html" class="inline-block border border-indigo-400 text-indigo-400 px-6 py-2 rounded-full hover:bg-indigo-400 hover:text-white transition-colors">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Service Item 2 -->
-                    <div class="service-item">
-                        <div class="service-header">
-                            <div class="service-title-group">
-                                <span class="service-num">02</span>
-                                <h3 class="service-name">Digital Marketing & Branding</h3>
-                            </div>
-                            <div class="service-icon">
-                                <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                            </div>
-                        </div>
-                        <div class="service-content">
-                            <div class="service-content-inner max-w-3xl">
-                                <p class="text-gray-400 text-base md:text-lg mb-6">We build and amplify your brand's voice in a crowded digital world. By leveraging social data, consumer insights, and performance analytics, we craft data-driven campaigns that ensure a real return on investment. From SEO and social media strategy to targeted ad campaigns, we create content that grabs attention, sparks engagement, and converts.</p>
-                                <a href="services.html" class="inline-block border border-indigo-400 text-indigo-400 px-6 py-2 rounded-full hover:bg-indigo-400 hover:text-white transition-colors">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Service Item 3 -->
-                    <div class="service-item">
-                         <div class="service-header">
-                            <div class="service-title-group">
-                                <span class="service-num">03</span>
-                                <h3 class="service-name">Web & Tech Solutions</h3>
-                            </div>
-                            <div class="service-icon">
-                               <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                            </div>
-                        </div>
-                        <div class="service-content">
-                             <div class="service-content-inner max-w-3xl">
-                                <p class="text-gray-400 text-base md:text-lg mb-6">Our team engineers robust, scalable, and intuitive digital platforms using modern technologies. We build everything from sleek, responsive websites and complex e-commerce stores to high-performance mobile apps and secure blockchain integrations. Our solutions are built to perform and designed to impress, ensuring a seamless user experience across all devices.</p>
-                                <a href="services.html" class="inline-block border border-indigo-400 text-indigo-400 px-6 py-2 rounded-full hover:bg-indigo-400 hover:text-white transition-colors">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Service Item 4 -->
-                    <div class="service-item">
-                         <div class="service-header">
-                            <div class="service-title-group">
-                                <span class="service-num">04</span>
-                                <h3 class="service-name">Software & AI</h3>
-                            </div>
-                            <div class="service-icon">
-                               <svg class="w-8 h-8 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M12 6V3m0 18v-3M5.636 5.636l-1.414-1.414M19.778 19.778l-1.414-1.414M18.364 5.636l-1.414 1.414M4.222 19.778l-1.414 1.414M12 12a3 3 0 100-6 3 3 0 000 6z"></path></svg>
-                            </div>
-                        </div>
-                        <div class="service-content">
-                            <div class="service-content-inner max-w-3xl">
-                                <p class="text-gray-400 text-base md:text-lg mb-6">We develop intelligent, custom software solutions that solve complex business challenges. By integrating artificial intelligence and machine learning, we help automate processes, derive powerful data-driven insights, and create intelligent applications for the future. From custom CRMs to advanced automation, we build software that drives innovation.</p>
-                                <a href="services.html" class="inline-block border border-indigo-400 text-indigo-400 px-6 py-2 rounded-full hover:bg-indigo-400 hover:text-white transition-colors">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- "Why Veyra?" Section -->
-        <section id="why-veyra" class="py-20 md:py-32 px-4 sm:px-8 md:px-16 bg-black/20">
-            <div class="container mx-auto">
-                 <div class="text-center mb-12 md:mb-16">
-                    <h3 class="text-4xl md:text-5xl font-bold">Why Veyra?</h3>
-                    <p class="text-lg text-gray-400 mt-4">We combine creativity with strategy to deliver results.</p>
+        <main>
+            <!-- Hero Section with Video Show Reel -->
+            <section id="hero" class="px-4">
+                <div class="background-orb"></div>
+                <video id="hero-video" autoplay loop muted playsinline poster="https://placehold.co/1920x1080/0a0a0a/0a0a0a">
+                    <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-video-of-a-man-with-head-down-42343-large.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="text-center z-10">
+                    <!-- Reduced Heading size for Mobile (text-4xl) -->
+                    <h2 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-tight">
+                        <div class="line-wrapper"><div class="hero-line">Architecting</div></div>
+                        <div class="line-wrapper"><div class="hero-line text-indigo-400">The Unimagined.</div></div>
+                    </h2>
+                    <div class="line-wrapper">
+                        <!-- Reduced paragraph text size for Mobile (text-base) -->
+                        <p class="hero-line text-base sm:text-lg md:text-xl text-gray-300 mt-6 max-w-xl mx-auto px-4">
+                            We are a rogue unit of digital architects, fusing raw code with aesthetic chaos to build the systems of tomorrow.
+                        </p>
+                    </div>
+                    <div class="line-wrapper">
+                       <a href="contact.html" class="hero-line inline-block mt-8 border border-indigo-400 text-indigo-400 px-6 py-2 sm:px-8 sm:py-3 rounded-full hover:bg-indigo-400 hover:text-white transition-colors text-base sm:text-lg">
+                            Engage Protocol
+                        </a>
+                    </div>
                 </div>
+            </section>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Value Card 1: Creative Excellence -->
-                    <div class="value-card bg-gray-800/30 p-8 rounded-xl border border-gray-700/50">
-                        <div class="flex items-center justify-center w-16 h-16 rounded-full bg-indigo-900/50 mb-6">
-                           <svg class="w-8 h-8 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4M14 3v4m-2-2h4M17 17v4m-2-2h4M9 10v4m-2-2h4m5-4v4m-2-2h4"></path></svg>
-                        </div>
-                        <h4 class="text-2xl font-bold mb-3">Creative Excellence</h4>
-                        <p class="text-gray-400">We are passionate storytellers and designers who believe in the power of aesthetics to create a lasting impact.</p>
+            <!-- Marquee Section -->
+            <section class="marquee">
+                <div class="marquee-content">
+                     <span class="marquee-item">Visual Synthesis</span>
+                    <span class="marquee-item">Brand Velocity</span>
+                    <span class="marquee-item">Digital Ecosystems</span>
+                    <span class="marquee-item">Neural Networks & AI</span>
+                    <span class="marquee-item">Immersive UI/UX</span>
+                    <!-- Duplicate for seamless loop -->
+                     <span class="marquee-item">Visual Synthesis</span>
+                    <span class="marquee-item">Brand Velocity</span>
+                    <span class="marquee-item">Digital Ecosystems</span>
+                    <span class="marquee-item">Neural Networks & AI</span>
+                    <span class="marquee-item">Immersive UI/UX</span>
+                </div>
+            </section>
+
+            <!-- Services Accordion Section -->
+            <section id="services" class="py-16 md:py-32">
+                <div class="container mx-auto px-4 sm:px-8 md:px-16">
+                    <div class="mb-10 md:mb-16">
+                        <!-- Responsive heading sizing -->
+                        <h2 class="text-3xl md:text-5xl font-bold text-center md:text-left">Protocol Modules</h2>
                     </div>
-                    <!-- Value Card 2: Data-Driven Strategy -->
-                    <div class="value-card bg-gray-800/30 p-8 rounded-xl border border-gray-700/50">
-                         <div class="flex items-center justify-center w-16 h-16 rounded-full bg-indigo-900/50 mb-6">
-                           <svg class="w-8 h-8 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    <div id="services-list">
+                        <!-- Service Item 1 -->
+                        <div class="service-item">
+                            <div class="service-header">
+                                <div class="service-title-group">
+                                    <span class="service-num">01</span>
+                                    <h3 class="service-name">Visual Synthesis</h3>
+                                </div>
+                                <div class="service-icon">
+                                    <svg class="w-6 h-6 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L14.732 3.732z"></path></svg>
+                                </div>
+                            </div>
+                            <div class="service-content">
+                                <div class="service-content-inner max-w-3xl">
+                                    <p class="text-gray-400 text-sm md:text-lg mb-6">We don't just design; we hallucinate reality. Our visual language bridges the gap between static art and kinetic experience. From brand identity to motion graphics, we craft interfaces that feel alive and carry a weight that resonates in the digital void.</p>
+                                    <a href="services.html" class="inline-block border border-indigo-400 text-indigo-400 px-6 py-2 rounded-full hover:bg-indigo-400 hover:text-white transition-colors text-sm md:text-base">Explore Design</a>
+                                </div>
+                            </div>
                         </div>
-                        <h4 class="text-2xl font-bold mb-3">Data-Driven Strategy</h4>
-                        <p class="text-gray-400">Our creative solutions are backed by research and data, ensuring every decision is made with purpose to achieve measurable results.</p>
-                    </div>
-                     <!-- Value Card 3: Client Partnership -->
-                    <div class="value-card bg-gray-800/30 p-8 rounded-xl border border-gray-700/50">
-                         <div class="flex items-center justify-center w-16 h-16 rounded-full bg-indigo-900/50 mb-6">
-                            <svg class="w-8 h-8 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        <!-- Service Item 2 -->
+                        <div class="service-item">
+                            <div class="service-header">
+                                <div class="service-title-group">
+                                    <span class="service-num">02</span>
+                                    <h3 class="service-name">Brand Velocity</h3>
+                                </div>
+                                <div class="service-icon">
+                                    <svg class="w-6 h-6 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                </div>
+                            </div>
+                            <div class="service-content">
+                                <div class="service-content-inner max-w-3xl">
+                                    <p class="text-gray-400 text-sm md:text-lg mb-6">Silence is the enemy. We deploy high-frequency narratives and data-weaponized strategies to cut through the noise. By leveraging deep analytics and consumer psychographics, we ensure your signal is the only one heard in a crowded spectrum.</p>
+                                    <a href="services.html" class="inline-block border border-indigo-400 text-indigo-400 px-6 py-2 rounded-full hover:bg-indigo-400 hover:text-white transition-colors text-sm md:text-base">Amplify Signal</a>
+                                </div>
+                            </div>
                         </div>
-                        <h4 class="text-2xl font-bold mb-3">Client Partnership</h4>
-                        <p class="text-gray-400">We work with you, not just for you. We believe in transparent communication and collaboration to become a true extension of your team.</p>
+                        <!-- Service Item 3 -->
+                        <div class="service-item">
+                             <div class="service-header">
+                                <div class="service-title-group">
+                                    <span class="service-num">03</span>
+                                    <h3 class="service-name">Digital Ecosystems</h3>
+                                </div>
+                                <div class="service-icon">
+                                   <svg class="w-6 h-6 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                                </div>
+                            </div>
+                            <div class="service-content">
+                                 <div class="service-content-inner max-w-3xl">
+                                    <p class="text-gray-400 text-sm md:text-lg mb-6">Code is our clay. We sculpt resilient, scalable, and high-performance digital infrastructures. From headless architectures and decentralized apps to complex e-commerce platforms, we build the backbone that powers your future operations.</p>
+                                    <a href="services.html" class="inline-block border border-indigo-400 text-indigo-400 px-6 py-2 rounded-full hover:bg-indigo-400 hover:text-white transition-colors text-sm md:text-base">View Architecture</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Service Item 4 -->
+                        <div class="service-item">
+                             <div class="service-header">
+                                <div class="service-title-group">
+                                    <span class="service-num">04</span>
+                                    <h3 class="service-name">Neural Intelligence</h3>
+                                </div>
+                                <div class="service-icon">
+                                   <svg class="w-6 h-6 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M12 6V3m0 18v-3M5.636 5.636l-1.414-1.414M19.778 19.778l-1.414-1.414M18.364 5.636l-1.414 1.414M4.222 19.778l-1.414 1.414M12 12a3 3 0 100-6 3 3 0 000 6z"></path></svg>
+                                </div>
+                            </div>
+                            <div class="service-content">
+                                <div class="service-content-inner max-w-3xl">
+                                    <p class="text-gray-400 text-sm md:text-lg mb-6">The future is algorithmic. We integrate next-gen AI and machine learning models to automate the mundane and illuminate the complex. We turn raw data into prophetic insights, building intelligent applications that learn and adapt.</p>
+                                    <a href="services.html" class="inline-block border border-indigo-400 text-indigo-400 px-6 py-2 rounded-full hover:bg-indigo-400 hover:text-white transition-colors text-sm md:text-base">Initialize AI</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-    </main>
+            </section>
+
+            <!-- "Why Plum?" Section -->
+            <section id="why-veyra" class="py-16 md:py-32 px-4 sm:px-8 md:px-16 bg-black/20">
+                <div class="container mx-auto">
+                     <div class="text-center mb-10 md:mb-16">
+                        <h3 class="text-3xl md:text-5xl font-bold">Why Plum Protocol?</h3>
+                        <p class="text-base md:text-lg text-gray-400 mt-4">Merging the abstract with the absolute.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                        <!-- Value Card 1: Aesthetic Mastery -->
+                        <div class="value-card bg-gray-800/30 p-6 md:p-8 rounded-xl border border-gray-700/50">
+                            <div class="flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full bg-indigo-900/50 mb-6">
+                               <svg class="w-6 h-6 md:w-8 md:h-8 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4M14 3v4m-2-2h4M17 17v4m-2-2h4M9 10v4m-2-2h4m5-4v4m-2-2h4"></path></svg>
+                            </div>
+                            <h4 class="text-xl md:text-2xl font-bold mb-3">Aesthetic Mastery</h4>
+                            <p class="text-gray-400 text-sm md:text-base">Beauty with a pulse. We craft visuals that don't just look good—they feel inevitable. We value high-fidelity design that commands attention.</p>
+                        </div>
+                        <!-- Value Card 2: Algorithmic Precision -->
+                        <div class="value-card bg-gray-800/30 p-6 md:p-8 rounded-xl border border-gray-700/50">
+                             <div class="flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full bg-indigo-900/50 mb-6">
+                               <svg class="w-6 h-6 md:w-8 md:h-8 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                            </div>
+                            <h4 class="text-xl md:text-2xl font-bold mb-3">Algorithmic Precision</h4>
+                            <p class="text-gray-400 text-sm md:text-base">We don't guess. We calculate. Every creative decision is backed by deep-dive analytics and market forensics to ensure maximum ROI.</p>
+                        </div>
+                         <!-- Value Card 3: Symbiotic Partnership -->
+                        <div class="value-card bg-gray-800/30 p-6 md:p-8 rounded-xl border border-gray-700/50">
+                             <div class="flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full bg-indigo-900/50 mb-6">
+                                <svg class="w-6 h-6 md:w-8 md:h-8 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                            </div>
+                            <h4 class="text-xl md:text-2xl font-bold mb-3">Symbiotic Partnership</h4>
+                            <p class="text-gray-400 text-sm md:text-base">We aren't just a vendor; we are your co-pilots. We merge with your vision to navigate the digital void together, keeping you ahead of the curve.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
 
     <!-- Footer -->
     <footer class="pt-10 pb-16 px-4 sm:px-8 md:px-16">
@@ -369,41 +463,42 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left border-t border-gray-800 pt-10">
                 <!-- Brand -->
                 <div class="md:col-span-1">
-                     <a href="/" class="text-3xl font-bold text-white mb-2 inline-block">Véyra</a>
-                     <p class="text-gray-500 text-sm">Creativity Meets Innovation</p>
+                     <!-- Updated Logo -->
+                     <a href="/" class="text-3xl font-bold text-white mb-2 inline-block font-logo">Plum Protocol</a>
+                     <p class="text-gray-500 text-sm">Architecting the Unimagined</p>
                 </div>
                 <!-- Contact Info -->
                 <div>
-                    <h4 class="font-semibold text-white mb-4">Contact Us</h4>
+                    <h4 class="font-semibold text-white mb-4">Uplink</h4>
                     <div class="text-gray-400 space-y-2">
-                        <p><a href="tel:+918928246726" class="hover:text-indigo-400 transition-colors">+91 8928246726</a></p>
                         <p><a href="tel:+918689927975" class="hover:text-indigo-400 transition-colors">+91 8689927975</a></p>
-                        <p><a href="mailto:veyracreativesdigitallab25@gmail.com" class="hover:text-indigo-400 transition-colors">Email</a></p>
-                        <p><a href="https://wa.me/918928246726" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">WhatsApp</a></p>
+                        <p><a href="mailto:plumprotocol@gmail.com" class="hover:text-indigo-400 transition-colors">plumprotocol@gmail.com</a></p>
+                        <p><a href="https://wa.me/918689927975" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">WhatsApp Secure</a></p>
                     </div>
                 </div>
                  <!-- Social Links -->
                  <div class="md:ml-8">
-                    <h4 class="font-semibold text-white mb-4">Follow Us</h4>
+                    <h4 class="font-semibold text-white mb-4">Network</h4>
                     <div class="text-gray-400 space-y-2">
-                        <p><a href="https://www.linkedin.com/company/veyracreativesanddigitallab/posts/?feedView=all" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">LinkedIn</a></p>
-                        <p><a href="https://www.instagram.com/veyracdl_25/" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">Instagram</a></p>
+                        <p><a href="https://www.linkedin.com/in/anujdipak/" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">LinkedIn</a></p>
+                        <p><a href="https://www.instagram.com/plumprotocol/" target="_blank" rel="noopener noreferrer" class="hover:text-indigo-400 transition-colors">Instagram</a></p>
                     </div>
                 </div>
                 <!-- Legal Links -->
                 <div>
-                    <h4 class="font-semibold text-white mb-4">Legal</h4>
+                    <h4 class="font-semibold text-white mb-4">Legal Parameters</h4>
                     <div class="text-gray-400 space-y-2">
-                        <p><a href="#" class="hover:text-indigo-400 transition-colors">Terms & Conditions</a></p>
+                        <p><a href="#" class="hover:text-indigo-400 transition-colors">Terms of Service</a></p>
                         <p><a href="#" class="hover:text-indigo-400 transition-colors">Privacy Policy</a></p>
                     </div>
                 </div>
             </div>
             <div class="text-center text-gray-500 mt-12 pt-8 border-t border-gray-800">
-                 <p class="text-sm">&copy; 2024 Veyra Creatives & Digital Lab. All Rights Reserved.</p>
+                 <p class="text-sm">&copy; 2025 Plum Protocol. All Systems Operational.</p>
             </div>
         </div>
     </footer>
+    </div>
 
     <!-- GSAP for animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -413,8 +508,33 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const preloader = document.getElementById('preloader');
+            const mainContent = document.getElementById('main-content');
+
+            // Force load content if stuck
+            const loadTimeout = setTimeout(() => {
+                if (preloader && !preloader.classList.contains('loaded')) {
+                    preloader.classList.add('loaded');
+                    mainContent.classList.remove('content-hidden');
+                }
+            }, 2500); // 2.5s fallback
+
+            // Listen for the window to be fully loaded (including images)
+            window.addEventListener('load', () => {
+                clearTimeout(loadTimeout);
+                // Hide preloader
+                preloader.classList.add('loaded');
+                
+                // Show main content
+                mainContent.classList.remove('content-hidden');
+            });
+
             // 1. LENIS SMOOTH SCROLL
-            const lenis = new Lenis({ duration: 1.2 });
+            const lenis = new Lenis({ 
+                duration: 1.2,
+                smoothWheel: true,
+                wheelMultiplier: 1,
+            });
             function raf(time) {
                 lenis.raf(time);
                 requestAnimationFrame(raf);
@@ -424,60 +544,7 @@
             lenis.on('scroll', ScrollTrigger.update);
             gsap.ticker.add((time) => lenis.raf(time * 1000));
 
-            // 2. HERO TEXT ANIMATION
-            gsap.from(".hero-line", { y: 100, opacity: 0, duration: 1, ease: "power3.out", stagger: 0.2, delay: 0.5 });
-
-            // 3. SERVICES ACCORDION
-            const serviceItems = document.querySelectorAll('.service-item');
-            let activeItem = null;
-            serviceItems.forEach(item => {
-                const header = item.querySelector('.service-header');
-                header.addEventListener('click', () => {
-                    if (activeItem && activeItem !== item) {
-                        activeItem.classList.remove('active');
-                    }
-                    item.classList.toggle('active');
-                    if (item.classList.contains('active')) {
-                        activeItem = item;
-                    } else {
-                        activeItem = null;
-                    }
-                });
-            });
-
-            // 4. GENERAL SECTION ANIMATIONS
-            gsap.utils.toArray('#why-veyra, #services').forEach(section => {
-                const elems = section.querySelectorAll('.text-4xl, .text-5xl, .text-lg, .value-card, .service-item');
-                gsap.from(elems, {
-                    opacity: 0,
-                    y: 50,
-                    duration: 1,
-                    stagger: 0.1,
-                    scrollTrigger: {
-                        trigger: section,
-                        start: 'top 80%',
-                        toggleActions: 'play none none none'
-                    }
-                });
-            });
-            
-            // 5. HEADER BACKGROUND CHANGE ON SCROLL
-            const header = document.querySelector('header');
-            ScrollTrigger.create({
-                start: 'top top',
-                end: 99999,
-                onUpdate: (self) => {
-                    if (self.scroll() > 50) {
-                        header.style.backgroundColor = 'rgba(10, 10, 10, 0.8)';
-                        header.style.backdropFilter = 'blur(10px)';
-                    } else {
-                        header.style.backgroundColor = 'transparent';
-                        header.style.backdropFilter = 'none';
-                    }
-                }
-            });
-            
-            // 6. MOBILE MENU LOGIC
+            // 2. MOBILE MENU LOGIC
             const hamburgerBtn = document.getElementById('hamburger-button');
             const mobileMenu = document.getElementById('mobile-menu');
             const closeMenuBtn = document.getElementById('close-menu');
@@ -485,11 +552,13 @@
 
             hamburgerBtn.addEventListener('click', () => {
                 mobileMenu.classList.remove('-translate-x-full');
+                hamburgerBtn.classList.add('hidden'); // Hide the hamburger
                 document.body.style.overflow = 'hidden';
             });
 
             const closeMenu = () => {
                 mobileMenu.classList.add('-translate-x-full');
+                hamburgerBtn.classList.remove('hidden'); // Show the hamburger
                 document.body.style.overflow = '';
             };
 
@@ -520,4 +589,3 @@
     </script>
 </body>
 </html>
-
