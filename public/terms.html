@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions - Plum Protocol</title>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #e5e5e5;
+            font-family: 'Poppins', sans-serif;
+        }
+        .font-logo { font-family: 'Dancing Script', cursive; }
+        h1, h2, h3 { color: #fff; }
+        .legal-content p { margin-bottom: 1.5rem; color: #9ca3af; line-height: 1.7; }
+        .legal-content h2 { margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.5rem; font-weight: 600; color: #818cf8; }
+        .legal-content ul { list-style-type: disc; margin-left: 1.5rem; margin-bottom: 1.5rem; color: #9ca3af; }
+        .legal-content li { margin-bottom: 0.5rem; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 w-full z-50 py-4 px-4 sm:px-8 md:px-16 bg-black/80 backdrop-blur-md border-b border-gray-800">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-3xl font-normal text-white font-logo">Plum Protocol</a>
+            <a href="index.html" class="text-sm text-gray-400 hover:text-white transition-colors">Back to Home</a>
+        </div>
+    </header>
+
+    <main class="pt-32 pb-20 px-4 sm:px-8 md:px-16">
+        <div class="container mx-auto max-w-4xl">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Terms and Conditions</h1>
+            <p class="text-gray-500 mb-12">Last Updated: December 11, 2025</p>
+
+            <div class="legal-content">
+                <p>Welcome to Plum Protocol. These Terms and Conditions ("Terms") govern your use of our website located at plumprotocol.vercel.app (the "Site") and any related services provided by Plum Protocol.</p>
+                
+                <p>By accessing this website, we assume you accept these terms and conditions. Do not continue to use Plum Protocol if you do not agree to take all of the terms and conditions stated on this page.</p>
+
+                <h2>1. Definitions</h2>
+                <p>The terminology applies to these Terms and Conditions, Privacy Statement and Disclaimer Notice and all Agreements: "Client", "You" and "Your" refers to you, the person log on this website and compliantqw to the Company’s terms and conditions. "The Company", "Ourselves", "We", "Our" and "Us", refers to our Company. "Party", "Parties", or "Us", refers to both the Client and ourselves.</p>
+
+                <h2>2. Intellectual Property Rights</h2>
+                <p>Other than the content you own, under these Terms, Plum Protocol and/or its licensors own all the intellectual property rights and materials contained in this Website. You are granted limited license only for purposes of viewing the material contained on this Website.</p>
+
+                <h2>3. Restrictions</h2>
+                <p>You are specifically restricted from all of the following:</p>
+                <ul>
+                    <li>Publishing any Website material in any other media without prior consent.</li>
+                    <li>Selling, sublicensing and/or otherwise commercializing any Website material.</li>
+                    <li>Using this Website in any way that is or may be damaging to this Website.</li>
+                    <li>Using this Website in any way that impacts user access to this Website.</li>
+                    <li>Using this Website contrary to applicable laws and regulations, or in any way may cause harm to the Website, or to any person or business entity.</li>
+                </ul>
+
+                <h2>4. Limitation of Liability</h2>
+                <p>In no event shall Plum Protocol, nor any of its officers, directors and employees, be held liable for anything arising out of or in any way connected with your use of this Website whether such liability is under contract. Plum Protocol, including its officers, directors and employees shall not be held liable for any indirect, consequential or special liability arising out of or in any way related to your use of this Website.</p>
+
+                <h2>5. Governing Law & Jurisdiction</h2>
+                <p>These Terms will be governed by and interpreted in accordance with the laws of India. You submit to the non-exclusive jurisdiction of the state and federal courts located in Mumbai, Maharashtra for the resolution of any disputes.</p>
+
+                <h2>6. Changes to Terms</h2>
+                <p>Plum Protocol is permitted to revise these Terms at any time as it sees fit, and by using this Website you are expected to review these Terms on a regular basis.</p>
+
+                <h2>7. Contact Information</h2>
+                <p>If you have any questions about these Terms, please contact us at:<br>
+                Email: <a href="mailto:plumprotocol@gmail.com" class="text-indigo-400 hover:text-white">plumprotocol@gmail.com</a></p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="pt-10 pb-16 px-4 sm:px-8 md:px-16 border-t border-gray-800 mt-12">
+        <div class="container mx-auto text-center">
+            <p class="text-sm text-gray-500">&copy; 2025 Plum Protocol. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Lenis for smooth scrolling -->
+    <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
+    <script>
+        // Initialize Lenis Smooth Scroll
+        const lenis = new Lenis({
+            duration: 1.2,
+            smoothWheel: true,
+            wheelMultiplier: 1,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+
+        requestAnimationFrame(raf);
+    </script>
+</body>
+</html>
