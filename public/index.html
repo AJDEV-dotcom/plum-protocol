@@ -48,7 +48,7 @@
         }
         .loader-logo {
             font-family: 'Dancing Script', cursive;
-            font-size: 3rem; /* Smaller on mobile by default */
+            font-size: 3rem; 
             font-weight: 400;
             letter-spacing: 0;
             color: #e5e5e5;
@@ -144,8 +144,8 @@
         }
         .marquee-item {
             display: inline-block;
-            padding: 0.75rem 1.5rem; /* Reduced padding for mobile */
-            font-size: 1rem; /* Smaller font for mobile */
+            padding: 0.75rem 1.5rem; 
+            font-size: 1rem; 
             font-weight: 600;
             color: #a0a0a0;
         }
@@ -161,17 +161,15 @@
         .service-item {
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
-            overflow: hidden;
-            contain: layout paint; 
         }
         .service-header {
             cursor: pointer;
-            padding: 1.25rem 0; /* Reduced padding */
+            padding: 1.25rem 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: relative;
-            z-index: 2;
+            z-index: 10;
         }
         @media (min-width: 768px) {
             .service-header { padding: 1.5rem 0; }
@@ -183,11 +181,11 @@
         }
         .service-title-group .service-num {
             color: #6b7280;
-            font-size: 0.75rem; /* Smaller number */
+            font-size: 0.75rem; 
             font-weight: 500;
         }
         .service-title-group .service-name {
-            font-size: 1.25rem; /* Smaller title on mobile (20px) */
+            font-size: 1.25rem; 
             font-weight: 600;
             color: #9ca3af;
             transition: color 0.3s ease;
@@ -199,17 +197,16 @@
         .service-icon {
             color: #9ca3af;
             transition: color 0.3s ease;
-            transform: scale(0.8); /* Smaller icon on mobile */
+            transform: scale(0.8);
         }
         @media (min-width: 768px) { .service-icon { transform: scale(1); } }
 
         .service-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: max-height 0.5s ease-in-out;
             position: relative;
-            z-index: 2;
-            will-change: max-height;
+            z-index: 5;
         }
         .service-content-inner {
             padding-bottom: 1.5rem;
@@ -221,13 +218,18 @@
                 padding-left: 2.75rem; 
             }
         }
-        /* Active/Hover State */
-        .service-item:hover .service-name,
-        .service-item:hover .service-icon {
-            color: #818cf8; /* Indigo-400 */
+        
+        /* Active/Hover State Logic */
+        /* Only apply hover effect on devices with a mouse (prevents sticky hover on mobile) */
+        @media (hover: hover) {
+            .service-item:hover .service-name,
+            .service-item:hover .service-icon {
+                color: #818cf8; /* Indigo-400 */
+            }
         }
+
         .service-item.active .service-content {
-            max-height: 500px;
+            max-height: 1000px;
         }
         .service-item.active .service-name,
         .service-item.active .service-icon {
@@ -248,6 +250,7 @@
             <div class="container mx-auto flex justify-between items-center">
                 <!-- Logo -->
                 <a href="index.html" class="text-3xl md:text-4xl font-normal text-white font-logo">Plum Protocol</a>
+                
                 <nav class="hidden md:flex space-x-6 lg:space-x-8 items-center">
                     <a href="index.html" class="text-sm lg:text-base text-indigo-400 font-semibold transition-colors">Home</a>
                     <a href="services.html" class="text-sm lg:text-base text-white hover:text-indigo-400 transition-colors">Services</a>
@@ -255,6 +258,7 @@
                     <a href="contact.html" class="text-sm lg:text-base text-white hover:text-indigo-400 transition-colors">Contact</a>
                     <a href="contact.html" class="text-sm lg:text-base bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-500 transition-transform hover:scale-105">Initialize Project</a>
                 </nav>
+                
                 <!-- Hamburger Button (Standard 3 Lines) -->
                 <button id="hamburger-button" class="md:hidden text-white text-3xl z-50 focus:outline-none flex-shrink-0">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -263,22 +267,19 @@
                 </button>
             </div>
         </header>
-
-        <!-- Mobile Menu (Hidden by default) -->
-        <!-- Z-Index increased to 60 to cover header -->
+        
+        <!-- Mobile Menu -->
         <div id="mobile-menu" class="fixed inset-0 bg-black bg-opacity-95 z-[60] transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
             <!-- Header inside mobile menu -->
             <div class="flex justify-between items-center p-4 px-4 sm:px-8">
                 <a href="index.html" class="text-3xl md:text-4xl font-normal text-white font-logo">Plum Protocol</a>
-                
-                <!-- Fixed Close Button (SVG Icon) -->
-                <button id="close-menu" class="text-white z-50 focus:outline-none p-2">
+                <!-- Close Button SVG -->
+                <button id="close-menu" class="text-white text-5xl focus:outline-none p-2">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
             </div>
-            
             <!-- Navigation Links -->
             <nav class="flex flex-col items-center justify-center flex-grow -mt-20 space-y-8">
                 <a href="index.html" class="mobile-menu-link text-3xl text-indigo-400 font-semibold">Home</a>
@@ -289,9 +290,8 @@
             </nav>
         </div>
 
-
         <main>
-            <!-- Hero Section with Video Show Reel -->
+            <!-- Hero Section -->
             <section id="hero" class="px-4">
                 <div class="background-orb"></div>
                 <video id="hero-video" autoplay loop muted playsinline poster="https://placehold.co/1920x1080/0a0a0a/0a0a0a">
@@ -299,13 +299,11 @@
                     Your browser does not support the video tag.
                 </video>
                 <div class="text-center z-10">
-                    <!-- Reduced Heading size for Mobile (text-4xl) -->
                     <h2 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-tight">
                         <div class="line-wrapper"><div class="hero-line">Architecting</div></div>
                         <div class="line-wrapper"><div class="hero-line text-indigo-400">The Unimagined.</div></div>
                     </h2>
                     <div class="line-wrapper">
-                        <!-- Reduced paragraph text size for Mobile (text-base) -->
                         <p class="hero-line text-base sm:text-lg md:text-xl text-gray-300 mt-6 max-w-xl mx-auto px-4">
                             We are a rogue unit of digital architects, fusing raw code with aesthetic chaos to build the systems of tomorrow.
                         </p>
@@ -326,7 +324,6 @@
                     <span class="marquee-item">Digital Ecosystems</span>
                     <span class="marquee-item">Neural Networks & AI</span>
                     <span class="marquee-item">Immersive UI/UX</span>
-                    <!-- Duplicate for seamless loop -->
                      <span class="marquee-item">Visual Synthesis</span>
                     <span class="marquee-item">Brand Velocity</span>
                     <span class="marquee-item">Digital Ecosystems</span>
@@ -339,7 +336,6 @@
             <section id="services" class="py-16 md:py-32">
                 <div class="container mx-auto px-4 sm:px-8 md:px-16">
                     <div class="mb-10 md:mb-16">
-                        <!-- Responsive heading sizing -->
                         <h2 class="text-3xl md:text-5xl font-bold text-center md:text-left">Protocol Modules</h2>
                     </div>
                     <div id="services-list">
@@ -356,7 +352,7 @@
                             </div>
                             <div class="service-content">
                                 <div class="service-content-inner max-w-3xl">
-                                    <p class="text-gray-400 text-sm md:text-lg mb-6">We don't just design; we hallucinate reality. Our visual language bridges the gap between static art and kinetic experience. From brand identity to motion graphics, we craft interfaces that feel alive and carry a weight that resonates in the digital void.</p>
+                                    <p class="text-gray-400 text-sm md:text-lg mb-6">We don't just design, we hallucinate reality. Our visual language bridges the gap between static art and kinetic experience. From brand identity to motion graphics, we craft interfaces that feel alive and carry a weight that resonates in the digital void.</p>
                                     <a href="services.html" class="inline-block border border-indigo-400 text-indigo-400 px-6 py-2 rounded-full hover:bg-indigo-400 hover:text-white transition-colors text-sm md:text-base">Explore Design</a>
                                 </div>
                             </div>
@@ -422,13 +418,13 @@
             <!-- "Why Plum?" Section -->
             <section id="why-veyra" class="py-16 md:py-32 px-4 sm:px-8 md:px-16 bg-black/20">
                 <div class="container mx-auto">
-                     <div class="text-center mb-10 md:mb-16">
+                    <div class="text-center mb-10 md:mb-16">
                         <h3 class="text-3xl md:text-5xl font-bold">Why Plum Protocol?</h3>
                         <p class="text-base md:text-lg text-gray-400 mt-4">Merging the abstract with the absolute.</p>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                        <!-- Value Card 1: Aesthetic Mastery -->
+                        <!-- Value Cards kept as is -->
                         <div class="value-card bg-gray-800/30 p-6 md:p-8 rounded-xl border border-gray-700/50">
                             <div class="flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full bg-indigo-900/50 mb-6">
                                <svg class="w-6 h-6 md:w-8 md:h-8 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4M14 3v4m-2-2h4M17 17v4m-2-2h4M9 10v4m-2-2h4m5-4v4m-2-2h4"></path></svg>
@@ -436,15 +432,13 @@
                             <h4 class="text-xl md:text-2xl font-bold mb-3">Aesthetic Mastery</h4>
                             <p class="text-gray-400 text-sm md:text-base">Beauty with a pulse. We craft visuals that don't just look good—they feel inevitable. We value high-fidelity design that commands attention.</p>
                         </div>
-                        <!-- Value Card 2: Algorithmic Precision -->
-                        <div class="value-card bg-gray-800/30 p-6 md:p-8 rounded-xl border border-gray-700/50">
+                         <div class="value-card bg-gray-800/30 p-6 md:p-8 rounded-xl border border-gray-700/50">
                              <div class="flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full bg-indigo-900/50 mb-6">
                                <svg class="w-6 h-6 md:w-8 md:h-8 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                             </div>
                             <h4 class="text-xl md:text-2xl font-bold mb-3">Algorithmic Precision</h4>
                             <p class="text-gray-400 text-sm md:text-base">We don't guess. We calculate. Every creative decision is backed by deep-dive analytics and market forensics to ensure maximum ROI.</p>
                         </div>
-                         <!-- Value Card 3: Symbiotic Partnership -->
                         <div class="value-card bg-gray-800/30 p-6 md:p-8 rounded-xl border border-gray-700/50">
                              <div class="flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full bg-indigo-900/50 mb-6">
                                 <svg class="w-6 h-6 md:w-8 md:h-8 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
@@ -463,7 +457,6 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left border-t border-gray-800 pt-10">
                 <!-- Brand -->
                 <div class="md:col-span-1">
-                     <!-- Updated Logo -->
                      <a href="/" class="text-3xl font-bold text-white mb-2 inline-block font-logo">Plum Protocol</a>
                      <p class="text-gray-500 text-sm">Architecting the Unimagined</p>
                 </div>
@@ -583,6 +576,55 @@
                         closeMenu();
                     }
                 });
+            });
+
+            // 3. SERVICES ACCORDION - FIXED LOGIC
+            const serviceItems = document.querySelectorAll('.service-item');
+            serviceItems.forEach(item => {
+                const header = item.querySelector('.service-header');
+                header.addEventListener('click', () => {
+                    // Close all other items first
+                    serviceItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle the clicked item
+                    item.classList.toggle('active');
+                });
+            });
+
+            // 4. GENERAL SECTION ANIMATIONS
+            gsap.utils.toArray('#why-veyra, #services').forEach(section => {
+                const elems = section.querySelectorAll('.text-4xl, .text-5xl, .text-lg, .value-card, .service-item');
+                gsap.from(elems, {
+                    opacity: 0,
+                    y: 50,
+                    duration: 1,
+                    stagger: 0.1,
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none'
+                    }
+                });
+            });
+            
+            // 5. HEADER BACKGROUND CHANGE ON SCROLL
+            const header = document.querySelector('header');
+            ScrollTrigger.create({
+                start: 'top top',
+                end: 99999,
+                onUpdate: (self) => {
+                    if (self.scroll() > 50) {
+                        header.style.backgroundColor = 'rgba(10, 10, 10, 0.8)';
+                        header.style.backdropFilter = 'blur(10px)';
+                    } else {
+                        header.style.backgroundColor = 'transparent';
+                        header.style.backdropFilter = 'none';
+                    }
+                }
             });
 
         });
