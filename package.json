@@ -1,14 +1,18 @@
 {
-"name": "veyra-website",
-"version": "1.0.0",
-"description": "Website for Plum Protocol",
-"main": "app.js",
-"scripts": {
-"start": "node app.js"
-},
-"author": "",
-"license": "ISC",
-"dependencies": {
-"express": "^4.19.2"
-}
+  "name": "plum-protocol",
+  "version": "1.0.0",
+  "description": "Website for Plum Protocol",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "build-css": "npx tailwindcss -i ./public/input.css -o ./public/css/style.css --minify"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.1"
+  }
 }
