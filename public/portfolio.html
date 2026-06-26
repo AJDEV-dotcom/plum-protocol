@@ -311,13 +311,12 @@
             const preloader = document.getElementById('preloader');
             const mainContent = document.getElementById('main-content');
 
-            // Listen for the window to be fully loaded (including images)
-            window.addEventListener('load', () => {
-                // Hide preloader
-                preloader.classList.add('loaded');
-                
-                // Show main content
-                mainContent.classList.remove('content-hidden');
+            // FADE OUT IMMEDIATELY when the DOM structure is ready
+            document.addEventListener('DOMContentLoaded', () => {
+                setTimeout(() => {
+                    preloader.classList.add('loaded');
+                    mainContent.classList.remove('content-hidden');
+                }, 100); // 100ms micro-delay to prevent flashes
             });
 
             // YIELD TO MAIN THREAD: Delay Lenis math by 50ms to prevent blocking

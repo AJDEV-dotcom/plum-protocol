@@ -314,13 +314,12 @@
             // Set initial states for animation using will-change property for optimization
             gsap.set('.service-card', { opacity: 0, y: 50 });
 
-            // Listen for the window to be fully loaded (including images)
-            window.addEventListener('load', () => {
-                // Hide preloader
-                preloader.classList.add('loaded');
-                
-                // Show main content
-                mainContent.classList.remove('content-hidden');
+            // FADE OUT IMMEDIATELY when the DOM structure is ready
+            document.addEventListener('DOMContentLoaded', () => {
+                setTimeout(() => {
+                    preloader.classList.add('loaded');
+                    mainContent.classList.remove('content-hidden');
+                }, 100); // 100ms micro-delay to prevent flashes
                 
                 // Animate cards in now that everything is loaded
                 gsap.to('.service-card', {
