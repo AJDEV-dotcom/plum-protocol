@@ -12,6 +12,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- Added Dancing Script for the Logo -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
     <style>
         body {
             background-color: #0a0a0a;
@@ -331,18 +333,26 @@
                 });
             });
 
-            // --- LENIS SMOOTH SCROLL ---
-            const lenis = new Lenis({ 
-                duration: 1.2,
-                smoothWheel: true,
-                wheelMultiplier: 1,
-            });
-            function raf(time) {
-                lenis.raf(time);
+            // YIELD TO MAIN THREAD: Delay animation math by 50ms to prevent blocking
+            setTimeout(() => {
+                // 1. LENIS SMOOTH SCROLL
+                const lenis = new Lenis({ 
+                    duration: 1.2,
+                    smoothWheel: true,
+                    wheelMultiplier: 1,
+                });
+                function raf(time) {
+                    lenis.raf(time);
+                    requestAnimationFrame(raf);
+                }
                 requestAnimationFrame(raf);
-            }
-            requestAnimationFrame(raf);
-
+                gsap.registerPlugin(ScrollTrigger);
+                lenis.on('scroll', ScrollTrigger.update);
+                gsap.ticker.add((time) => lenis.raf(time * 1000));
+                
+                // (Leave your GSAP ScrollTrigger animation code inside this setTimeout as well if it's in the file, like in index.html)
+                
+            }, 50); // 50ms delay
             // --- MOBILE MENU LOGIC ---
             const hamburgerBtn = document.getElementById('hamburger-button');
             const mobileMenu = document.getElementById('mobile-menu');

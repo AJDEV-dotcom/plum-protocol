@@ -12,6 +12,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- Added Dancing Script -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
     <style>
         body {
             background-color: #0a0a0a;
@@ -318,6 +320,22 @@
                 mainContent.classList.remove('content-hidden');
             });
 
+            // YIELD TO MAIN THREAD: Delay Lenis math by 50ms to prevent blocking
+            setTimeout(() => {
+                const lenis = new Lenis({ 
+                    duration: 1.2,
+                    smoothWheel: true,
+                    wheelMultiplier: 1,
+                });
+                function raf(time) {
+                    lenis.raf(time);
+                    requestAnimationFrame(raf);
+                }
+                requestAnimationFrame(raf);
+            }, 50);
+
+            // --- MOBILE MENU LOGIC ---
+
             // --- MOBILE MENU LOGIC ---
             const hamburgerBtn = document.getElementById('hamburger-button');
             const mobileMenu = document.getElementById('mobile-menu');
@@ -400,7 +418,16 @@
                 requestAnimationFrame(animate);
             }
 
-            init();
+            // YIELD TO MAIN THREAD: Only boot Three.js when the CPU is idle
+            const boot3DScene = () => {
+                init();
+            };
+
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(boot3DScene, { timeout: 2000 });
+            } else {
+                setTimeout(boot3DScene, 200);
+            }
         });
     </script>
 </body>

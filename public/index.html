@@ -12,6 +12,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- Added Dancing Script -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
     <style>
         /* Base styles with a vibrant gradient background */
         body {
@@ -518,20 +520,25 @@
                 mainContent.classList.remove('content-hidden');
             });
 
-            // 1. LENIS SMOOTH SCROLL
-            const lenis = new Lenis({ 
-                duration: 1.2,
-                smoothWheel: true,
-                wheelMultiplier: 1,
-            });
-            function raf(time) {
-                lenis.raf(time);
+            setTimeout(() => {
+                // 1. LENIS SMOOTH SCROLL
+                const lenis = new Lenis({ 
+                    duration: 1.2,
+                    smoothWheel: true,
+                    wheelMultiplier: 1,
+                });
+                function raf(time) {
+                    lenis.raf(time);
+                    requestAnimationFrame(raf);
+                }
                 requestAnimationFrame(raf);
-            }
-            requestAnimationFrame(raf);
-            gsap.registerPlugin(ScrollTrigger);
-            lenis.on('scroll', ScrollTrigger.update);
-            gsap.ticker.add((time) => lenis.raf(time * 1000));
+                gsap.registerPlugin(ScrollTrigger);
+                lenis.on('scroll', ScrollTrigger.update);
+                gsap.ticker.add((time) => lenis.raf(time * 1000));
+                
+                // (Leave your GSAP ScrollTrigger animation code inside this setTimeout as well if it's in the file, like in index.html)
+                
+            }, 50);
 
             // 2. MOBILE MENU LOGIC
             const hamburgerBtn = document.getElementById('hamburger-button');
