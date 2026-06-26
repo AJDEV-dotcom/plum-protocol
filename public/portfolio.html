@@ -311,13 +311,12 @@
             const preloader = document.getElementById('preloader');
             const mainContent = document.getElementById('main-content');
 
+            // FIX: Removed the nested DOMContentLoaded listener. 
             // FADE OUT IMMEDIATELY when the DOM structure is ready
-            document.addEventListener('DOMContentLoaded', () => {
-                setTimeout(() => {
-                    preloader.classList.add('loaded');
-                    mainContent.classList.remove('content-hidden');
-                }, 100); // 100ms micro-delay to prevent flashes
-            });
+            setTimeout(() => {
+                preloader.classList.add('loaded');
+                mainContent.classList.remove('content-hidden');
+            }, 100); // 100ms micro-delay to prevent flashes
 
             // YIELD TO MAIN THREAD: Delay Lenis math by 50ms to prevent blocking
             setTimeout(() => {
@@ -332,8 +331,6 @@
                 }
                 requestAnimationFrame(raf);
             }, 50);
-
-            // --- MOBILE MENU LOGIC ---
 
             // --- MOBILE MENU LOGIC ---
             const hamburgerBtn = document.getElementById('hamburger-button');

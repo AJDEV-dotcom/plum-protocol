@@ -497,27 +497,22 @@
     <!-- Lenis for smooth scrolling -->
     <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
 
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script defer src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const preloader = document.getElementById('preloader');
             const mainContent = document.getElementById('main-content');
 
-            // Force load content if stuck
-            const loadTimeout = setTimeout(() => {
-                if (preloader && !preloader.classList.contains('loaded')) {
-                    preloader.classList.add('loaded');
-                    mainContent.classList.remove('content-hidden');
-                }
-            }, 2500); // 2.5s fallback
+            // FIX: Removed the nested listener so it actually fades out
+            setTimeout(() => {
+                if (preloader) preloader.classList.add('loaded');
+                if (mainContent) mainContent.classList.remove('content-hidden');
+            }, 100);
 
-            // FADE OUT IMMEDIATELY when the DOM structure is ready
-            document.addEventListener('DOMContentLoaded', () => {
-                setTimeout(() => {
-                    preloader.classList.add('loaded');
-                    mainContent.classList.remove('content-hidden');
-                }, 100); // 100ms micro-delay to prevent flashes
-            });
-
+            // YIELD TO MAIN THREAD
             setTimeout(() => {
                 // 1. LENIS SMOOTH SCROLL
                 const lenis = new Lenis({ 
@@ -534,8 +529,37 @@
                 lenis.on('scroll', ScrollTrigger.update);
                 gsap.ticker.add((time) => lenis.raf(time * 1000));
                 
-                // (Leave your GSAP ScrollTrigger animation code inside this setTimeout as well if it's in the file, like in index.html)
+                // 4. GENERAL SECTION ANIMATIONS (Moved inside yield to protect TBT)
+                gsap.utils.toArray('#why-veyra, #services').forEach(section => {
+                    const elems = section.querySelectorAll('.text-4xl, .text-5xl, .text-lg, .value-card, .service-item');
+                    gsap.from(elems, {
+                        opacity: 0,
+                        y: 50,
+                        duration: 1,
+                        stagger: 0.1,
+                        scrollTrigger: {
+                            trigger: section,
+                            start: 'top 80%',
+                            toggleActions: 'play none none none'
+                        }
+                    });
+                });
                 
+                // 5. HEADER BACKGROUND CHANGE ON SCROLL
+                const header = document.querySelector('header');
+                ScrollTrigger.create({
+                    start: 'top top',
+                    end: 99999,
+                    onUpdate: (self) => {
+                        if (self.scroll() > 50) {
+                            header.style.backgroundColor = 'rgba(10, 10, 10, 0.8)';
+                            header.style.backdropFilter = 'blur(10px)';
+                        } else {
+                            header.style.backgroundColor = 'transparent';
+                            header.style.backdropFilter = 'none';
+                        }
+                    }
+                });
             }, 50);
 
             // 2. MOBILE MENU LOGIC
@@ -546,13 +570,13 @@
 
             hamburgerBtn.addEventListener('click', () => {
                 mobileMenu.classList.remove('-translate-x-full');
-                hamburgerBtn.classList.add('hidden'); // Hide the hamburger
+                hamburgerBtn.classList.add('hidden'); 
                 document.body.style.overflow = 'hidden';
             });
 
             const closeMenu = () => {
                 mobileMenu.classList.add('-translate-x-full');
-                hamburgerBtn.classList.remove('hidden'); // Show the hamburger
+                hamburgerBtn.classList.remove('hidden'); 
                 document.body.style.overflow = '';
             };
 
@@ -565,11 +589,9 @@
                          const targetId = href.substring(1);
                          const targetElement = document.getElementById(targetId);
                          if(targetElement) {
-                            lenis.scrollTo(targetElement, {
-                                offset: -80,
-                                duration: 1.5,
-                                onComplete: closeMenu
-                            });
+                            // Temporary fallback since Lenis might take 50ms to init
+                            document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                            closeMenu();
                          } else {
                             closeMenu();
                          }
@@ -579,55 +601,19 @@
                 });
             });
 
-            // 3. SERVICES ACCORDION - FIXED LOGIC
+            // 3. SERVICES ACCORDION
             const serviceItems = document.querySelectorAll('.service-item');
             serviceItems.forEach(item => {
                 const header = item.querySelector('.service-header');
                 header.addEventListener('click', () => {
-                    // Close all other items first
                     serviceItems.forEach(otherItem => {
                         if (otherItem !== item) {
                             otherItem.classList.remove('active');
                         }
                     });
-                    
-                    // Toggle the clicked item
                     item.classList.toggle('active');
                 });
             });
-
-            // 4. GENERAL SECTION ANIMATIONS
-            gsap.utils.toArray('#why-veyra, #services').forEach(section => {
-                const elems = section.querySelectorAll('.text-4xl, .text-5xl, .text-lg, .value-card, .service-item');
-                gsap.from(elems, {
-                    opacity: 0,
-                    y: 50,
-                    duration: 1,
-                    stagger: 0.1,
-                    scrollTrigger: {
-                        trigger: section,
-                        start: 'top 80%',
-                        toggleActions: 'play none none none'
-                    }
-                });
-            });
-            
-            // 5. HEADER BACKGROUND CHANGE ON SCROLL
-            const header = document.querySelector('header');
-            ScrollTrigger.create({
-                start: 'top top',
-                end: 99999,
-                onUpdate: (self) => {
-                    if (self.scroll() > 50) {
-                        header.style.backgroundColor = 'rgba(10, 10, 10, 0.8)';
-                        header.style.backdropFilter = 'blur(10px)';
-                    } else {
-                        header.style.backgroundColor = 'transparent';
-                        header.style.backdropFilter = 'none';
-                    }
-                }
-            });
-
         });
     </script>
 </body>

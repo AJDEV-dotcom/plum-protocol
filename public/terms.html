@@ -84,11 +84,12 @@
 
     <!-- Lenis for smooth scrolling -->
     <script defer src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
+    <script defer src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
     <script>
-        // Initialize Lenis Smooth Scroll
-        // YIELD TO MAIN THREAD: Delay animation math by 50ms to prevent blocking
+        document.addEventListener('DOMContentLoaded', () => {
+            // YIELD TO MAIN THREAD: Delay animation math by 50ms to prevent blocking
             setTimeout(() => {
-                // 1. LENIS SMOOTH SCROLL
+                // 1. LENIS SMOOTH SCROLL ONLY (Removed broken GSAP references)
                 const lenis = new Lenis({ 
                     duration: 1.2,
                     smoothWheel: true,
@@ -99,13 +100,8 @@
                     requestAnimationFrame(raf);
                 }
                 requestAnimationFrame(raf);
-                gsap.registerPlugin(ScrollTrigger);
-                lenis.on('scroll', ScrollTrigger.update);
-                gsap.ticker.add((time) => lenis.raf(time * 1000));
-                
-                // (Leave your GSAP ScrollTrigger animation code inside this setTimeout as well if it's in the file, like in index.html)
-                
-            }, 50); // 50ms delay
+            }, 50); 
+        });
     </script>
 </body>
 </html>

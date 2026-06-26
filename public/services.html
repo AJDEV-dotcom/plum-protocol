@@ -314,12 +314,11 @@
             // Set initial states for animation using will-change property for optimization
             gsap.set('.service-card', { opacity: 0, y: 50 });
 
+            // FIX: Removed the nested DOMContentLoaded listener.
             // FADE OUT IMMEDIATELY when the DOM structure is ready
-            document.addEventListener('DOMContentLoaded', () => {
-                setTimeout(() => {
-                    preloader.classList.add('loaded');
-                    mainContent.classList.remove('content-hidden');
-                }, 100); // 100ms micro-delay to prevent flashes
+            setTimeout(() => {
+                preloader.classList.add('loaded');
+                mainContent.classList.remove('content-hidden');
                 
                 // Animate cards in now that everything is loaded
                 gsap.to('.service-card', {
@@ -330,7 +329,7 @@
                     ease: 'power3.out',
                     delay: 0.3 // Short delay for preloader to fade
                 });
-            });
+            }, 100); // 100ms micro-delay to prevent flashes
 
             // YIELD TO MAIN THREAD: Delay animation math by 50ms to prevent blocking
             setTimeout(() => {
@@ -348,10 +347,8 @@
                 gsap.registerPlugin(ScrollTrigger);
                 lenis.on('scroll', ScrollTrigger.update);
                 gsap.ticker.add((time) => lenis.raf(time * 1000));
-                
-                // (Leave your GSAP ScrollTrigger animation code inside this setTimeout as well if it's in the file, like in index.html)
-                
             }, 50); // 50ms delay
+            
             // --- MOBILE MENU LOGIC ---
             const hamburgerBtn = document.getElementById('hamburger-button');
             const mobileMenu = document.getElementById('mobile-menu');
